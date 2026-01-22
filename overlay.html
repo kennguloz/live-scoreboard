@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Tỉ Số - Overlay</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: transparent;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        
+        .scoreboard {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 15px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            opacity: 0;
+            animation: slideDown 0.5s ease forwards;
+        }
+        
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .team-name {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .team-logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .score-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .score {
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .separator {
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .time {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .goal-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            color: #FFD700;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255,215,0,0.8);
+            animation: goalPulse 1s ease;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        @keyframes goalPulse {
+            0%, 100% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            50% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+    </style>
+</head>
+<parameter>
+</invoke>
+<body>
+    <div class="scoreboard" id="scoreboard">
+        <div class="team">
+            <div class="team-logo" id="team1Logo">⚽</div>
+            <div class="team-name" id="team1Name">ĐỘI 1</div>
+        </div>
+        
+        <div class="score-container">
+            <div class="score" id="score1">0</div>
+            <div class="separator">-</div>
+            <div class="score" id="score2">0</div>
+        </div>
+        
+        <div class="team">
+            <div class="team-logo" id="team2Logo">⚽</div>
+            <div class="team-name" id="team2Name">ĐỘI 2</div>
+        </div>
+        
+        <div class="time" id="matchTime">00:00</div>
+    </div>
+
+    <script type="module">
+        // Cấu hình Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5j17jgErGX0cwvEiQfc3FvDy_QW2ctho",
+            authDomain: "live-bong-da-2670d.firebaseapp.com",
+            databaseURL: "https://live-bong-da-2670d-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "live-bong-da-2670d",
+            storageBucket: "live-bong-da-2670d.firebasestorage.app",
+            messagingSenderId: "347090676357",
+            appId: "1:347090676357:web:667a5f338e882b53c457ec",
+            measurementId: "G-XVZ651QR4T"
+        };
+
+        // Import Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Khởi tạo Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Lắng nghe thay đổi dữ liệu
+        const scoreRef = ref(database, 'match');
+        
+        onValue(scoreRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                updateScoreboard(data);
+            }
+        });
+
+        let previousScore1 = 0;
+        let previousScore2 = 0;
+
+        function updateScoreboard(data) {
+            const scoreboard = document.getElementById('scoreboard');
+            
+            // Hiển thị bảng tỉ số nếu đang ẩn
+            if (data.visible !== false) {
+                scoreboard.classList.remove('hidden');
+            } else {
+                scoreboard.classList.add('hidden');
+                return;
+            }
+
+            // Cập nhật tên đội
+            document.getElementById('team1Name').textContent = data.team1 || 'ĐỘI 1';
+            document.getElementById('team2Name').textContent = data.team2 || 'ĐỘI 2';
+            
+            // Cập nhật logo (emoji hoặc text)
+            document.getElementById('team1Logo').textContent = data.logo1 || '⚽';
+            document.getElementById('team2Logo').textContent = data.logo2 || '⚽';
+            
+            // Kiểm tra có bàn thắng mới không
+            const newScore1 = data.score1 || 0;
+            const newScore2 = data.score2 || 0;
+            
+            if (newScore1 > previousScore1 || newScore2 > previousScore2) {
+                showGoalAnimation();
+            }
+            
+            // Cập nhật tỉ số
+            document.getElementById('score1').textContent = newScore1;
+            document.getElementById('score2').textContent = newScore2;
+            
+            previousScore1 = newScore1;
+            previousScore2 = newScore2;
+            
+            // Cập nhật thời gian
+            document.getElementById('matchTime').textContent = data.time || '00:00';
+        }
+
+        function showGoalAnimation() {
+            const goalDiv = document.createElement('div');
+            goalDiv.className = 'goal-animation';
+            goalDiv.textContent = 'GOOOAL! ⚽';
+            document.body.appendChild(goalDiv);
+            
+            setTimeout(() => {
+                goalDiv.remove();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
