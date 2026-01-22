@@ -210,19 +210,18 @@
         
         <!-- Preview Box -->
         <div class="preview-box">
-            <div class="preview-content">
-                <div>
-                    <div id="previewTeam1">ĐỘI A</div>
-                    <div class="preview-score" id="previewScore1">0</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; max-width: 700px; margin: 0 auto;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                    <div class="preview-score" id="previewScore1" style="background: #ffc107; color: #000; padding: 10px 25px; border-radius: 5px;">0</div>
+                    <div id="previewTeam1" style="font-size: 16px;">ĐỘI A</div>
                 </div>
-                <div style="font-size: 36px;">-</div>
-                <div id="previewTime">00:00</div>
-                <div style="font-size: 36px;">-</div>
-                <div>
-                    <div id="previewTeam2">ĐỘI B</div>
-                    <div class="preview-score" id="previewScore2">0</div>
+                <div id="previewTime" style="font-size: 32px;">00:00</div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                    <div class="preview-score" id="previewScore2" style="background: #ffc107; color: #000; padding: 10px 25px; border-radius: 5px;">0</div>
+                    <div id="previewTeam2" style="font-size: 16px;">ĐỘI B</div>
                 </div>
             </div>
+            <div style="margin-top: 15px; font-size: 18px; color: #ccc;" id="previewMode">POSTER</div>
         </div>
 
         <!-- Team Names -->
@@ -250,21 +249,44 @@
             <h3 style="margin-bottom: 15px;">Chế Độ Hiển Thị:</h3>
             <div class="mode-grid">
                 <div class="mode-option">
+                    <input type="radio" name="mode" value="poster" id="modePoster" onchange="changeMode()">
+                    <label for="modePoster">POSTER</label>
+                </div>
+                <div class="mode-option">
+                    <input type="radio" name="mode" value="intro" id="modeIntro" onchange="changeMode()">
+                    <label for="modeIntro">GIỚI THIỆU</label>
+                </div>
+                <div class="mode-option">
+                    <input type="radio" name="mode" value="lineup" id="modeLineup" onchange="changeMode()">
+                    <label for="modeLineup">DANH SÁCH</label>
+                </div>
+                
+                <div class="mode-option">
                     <input type="radio" name="mode" value="score" id="modeScore" checked onchange="changeMode()">
                     <label for="modeScore">TỈ SỐ DƯỚI</label>
                 </div>
+                <div class="mode-option">
+                    <input type="radio" name="mode" value="countup0" id="modeCountup0" onchange="changeMode()">
+                    <label for="modeCountup0">ĐẾM 0'</label>
+                </div>
+                <div class="mode-option">
+                    <input type="radio" name="mode" value="halftime" id="modeHalftime" onchange="changeMode()">
+                    <label for="modeHalftime">NGHỈ HIỆP</label>
+                </div>
+                
                 <div class="mode-option">
                     <input type="radio" name="mode" value="countdown20" id="modeCountdown20" onchange="changeMode()">
                     <label for="modeCountdown20">ĐẾM 20'</label>
                 </div>
                 <div class="mode-option">
-                    <input type="radio" name="mode" value="countdown25" id="modeCountdown25" onchange="changeMode()">
-                    <label for="modeCountdown25">ĐẾM 25'</label>
+                    <input type="radio" name="mode" value="countup25" id="modeCountup25" onchange="changeMode()">
+                    <label for="modeCountup25">ĐẾM 25'</label>
                 </div>
                 <div class="mode-option">
-                    <input type="radio" name="mode" value="countdown30" id="modeCountdown30" onchange="changeMode()">
-                    <label for="modeCountdown30">ĐẾM 30'</label>
+                    <input type="radio" name="mode" value="countup30" id="modeCountup30" onchange="changeMode()">
+                    <label for="modeCountup30">ĐẾM 30'</label>
                 </div>
+                
                 <div class="mode-option">
                     <input type="radio" name="mode" value="countdown35" id="modeCountdown35" onchange="changeMode()">
                     <label for="modeCountdown35">ĐẾM 35'</label>
@@ -272,6 +294,10 @@
                 <div class="mode-option">
                     <input type="radio" name="mode" value="off" id="modeOff" onchange="changeMode()">
                     <label for="modeOff">TẮT</label>
+                </div>
+                <div class="mode-option">
+                    <input type="radio" name="mode" value="penalty" id="modePenalty" onchange="changeMode()">
+                    <label for="modePenalty">PENALTY</label>
                 </div>
             </div>
             
@@ -386,11 +412,24 @@
             currentData.mode = selectedMode;
             currentData.visible = selectedMode !== 'off';
             
-            // Nếu chọn đếm ngược, khởi tạo thời gian
-            if (selectedMode.startsWith('countdown')) {
-                const minutes = parseInt(selectedMode.replace('countdown', ''));
-                currentData.time = minutes + ':00';
-                startCountdown(minutes);
+            // Đếm ngược: 20', 35'
+            if (selectedMode === 'countdown20') {
+                currentData.time = '20:00';
+                startCountdown(20);
+            } else if (selectedMode === 'countdown35') {
+                currentData.time = '35:00';
+                startCountdown(35);
+            }
+            // Đếm lên: 0', 25', 30'
+            else if (selectedMode === 'countup0') {
+                currentData.time = '00:00';
+                startCountup();
+            } else if (selectedMode === 'countup25') {
+                currentData.time = '25:00';
+                startCountup();
+            } else if (selectedMode === 'countup30') {
+                currentData.time = '30:00';
+                startCountup();
             }
             
             saveToFirebase();
@@ -425,12 +464,30 @@
             let totalSeconds = minutes * 60;
             
             const interval = setInterval(() => {
-                if (totalSeconds <= 0 || currentData.mode !== `countdown${minutes}`) {
+                if (totalSeconds <= 0 || !currentData.mode.startsWith('countdown')) {
                     clearInterval(interval);
                     return;
                 }
                 
                 totalSeconds--;
+                const mins = Math.floor(totalSeconds / 60);
+                const secs = totalSeconds % 60;
+                currentData.time = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                saveToFirebase();
+            }, 1000);
+        }
+        
+        function startCountup() {
+            const startTime = currentData.time.split(':');
+            let totalSeconds = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
+            
+            const interval = setInterval(() => {
+                if (!currentData.mode.startsWith('countup')) {
+                    clearInterval(interval);
+                    return;
+                }
+                
+                totalSeconds++;
                 const mins = Math.floor(totalSeconds / 60);
                 const secs = totalSeconds % 60;
                 currentData.time = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
