@@ -13,93 +13,326 @@
         
         body {
             background: transparent;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             overflow: hidden;
         }
         
-        .scoreboard {
+        .hidden {
+            display: none !important;
+        }
+        
+        /* SKIN 1 - Vàng Xanh Navy */
+        .skin1 {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            padding: 15px 30px;
+            display: flex;
+            align-items: stretch;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        .skin1 .score-box {
+            background: #ffd700;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: bold;
+            color: #000;
+            min-width: 80px;
+        }
+        
+        .skin1 .team-box {
+            background: #1a3a52;
+            padding: 20px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 200px;
+        }
+        
+        .skin1 .team-name {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .skin1 .time {
+            background: white;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .skin1 .team-bar {
+            height: 8px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+        }
+        
+        .skin1 .team-box:first-child .team-bar {
+            background: #ff0000;
+        }
+        
+        .skin1 .team-box:last-child .team-bar {
+            background: #0066ff;
+        }
+        
+        /* SKIN 2 - Đỏ Xanh Dương */
+        .skin2 {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: stretch;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        .skin2 .team-box {
+            padding: 25px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .skin2 .team-box.left {
+            background: #ff0000;
+        }
+        
+        .skin2 .team-box.right {
+            background: #0066ff;
+        }
+        
+        .skin2 .team-name {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .skin2 .score {
+            color: white;
+            font-size: 70px;
+            font-weight: bold;
+        }
+        
+        .skin2 .time-box {
+            background: white;
+            padding: 25px 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .skin2 .time {
+            color: #000;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        /* SKIN 3 - Xanh Lá */
+        .skin3 {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        .skin3 .top-row {
+            display: flex;
+            align-items: stretch;
+        }
+        
+        .skin3 .team-box {
+            padding: 25px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .skin3 .team-box.left {
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
+        }
+        
+        .skin3 .team-box.right {
+            background: linear-gradient(135deg, #06d6a0, #1b9aaa);
+        }
+        
+        .skin3 .team-name {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .skin3 .score-box {
+            background: white;
+            padding: 20px 40px;
             display: flex;
             align-items: center;
             gap: 20px;
+        }
+        
+        .skin3 .score {
+            color: #000;
+            font-size: 55px;
+            font-weight: bold;
+        }
+        
+        .skin3 .separator {
+            color: #000;
+            font-size: 45px;
+            font-weight: bold;
+        }
+        
+        .skin3 .time-box {
+            background: #ff0000;
+            padding: 12px 30px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .skin3 .time {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        /* SKIN 4 - Cam Navy */
+        .skin4 {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             opacity: 0;
-            animation: slideDown 0.5s ease forwards;
+            animation: slideIn 0.5s ease forwards;
         }
         
-        @keyframes slideDown {
-            to {
-                opacity: 1;
-            }
+        .skin4 .top-row {
+            display: flex;
+            align-items: stretch;
+            position: relative;
         }
         
-        .team {
+        .skin4 .team-box {
+            padding: 25px 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
+        }
+        
+        .skin4 .team-box.left {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+        }
+        
+        .skin4 .team-box.right {
+            background: linear-gradient(135deg, #f7931e, #ff6b35);
+        }
+        
+        .skin4 .team-name {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .skin4 .center-box {
+            background: #003566;
+            padding: 25px 45px;
+            clip-path: polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
+            margin: 0 -25px;
+            z-index: 10;
+            position: relative;
         }
         
-        .team-name {
+        .skin4 .score-row {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .skin4 .score {
             color: white;
-            font-size: 18px;
+            font-size: 55px;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
         
-        .team-logo {
-            width: 50px;
-            height: 50px;
-            background: white;
+        .skin4 .logo-center {
+            width: 55px;
+            height: 55px;
+            background: #ffd60a;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 28px;
+            border: 3px solid white;
         }
         
-        .score-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .score {
-            color: white;
-            font-size: 48px;
-            font-weight: bold;
-            min-width: 60px;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .separator {
-            color: white;
-            font-size: 36px;
-            font-weight: bold;
-        }
-        
-        .time {
-            position: absolute;
-            bottom: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            padding: 5px 15px;
+        .skin4 .time {
+            background: white;
+            color: #003566;
+            padding: 8px 28px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 20px;
             font-weight: bold;
+            margin-top: 8px;
         }
         
-        .hidden {
-            display: none;
+        /* SKIN 5 - Đang Phát Triển */
+        .skin5 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 60px 100px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        .skin5 h1 {
+            font-size: 48px;
+            color: #333;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+            }
         }
         
         .goal-animation {
@@ -107,10 +340,10 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 100px;
+            font-size: 120px;
             color: #FFD700;
             font-weight: bold;
-            text-shadow: 0 0 20px rgba(255,215,0,0.8);
+            text-shadow: 0 0 30px rgba(255,215,0,0.8);
             animation: goalPulse 1s ease;
             pointer-events: none;
             z-index: 1000;
@@ -123,36 +356,92 @@
             }
             50% { 
                 opacity: 1; 
-                transform: translate(-50%, -50%) scale(1.2);
+                transform: translate(-50%, -50%) scale(1.3);
             }
         }
     </style>
 </head>
-<parameter>
-</invoke>
 <body>
-    <div class="scoreboard" id="scoreboard">
-        <div class="team">
-            <div class="team-logo" id="team1Logo">⚽</div>
-            <div class="team-name" id="team1Name">ĐỘI 1</div>
+
+    <!-- SKIN 1 -->
+    <div class="skin1" id="skin1">
+        <div class="score-box" id="score1_1">0</div>
+        <div class="team-box" style="position: relative;">
+            <div class="team-name" id="team1Name1">ĐỘI A</div>
+            <div class="team-bar"></div>
         </div>
-        
-        <div class="score-container">
-            <div class="score" id="score1">0</div>
-            <div class="separator">-</div>
-            <div class="score" id="score2">0</div>
+        <div style="background: #2c3e50; padding: 20px 30px; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="time" id="time1">00:00</div>
         </div>
-        
-        <div class="team">
-            <div class="team-logo" id="team2Logo">⚽</div>
-            <div class="team-name" id="team2Name">ĐỘI 2</div>
+        <div class="team-box" style="position: relative;">
+            <div class="team-name" id="team2Name1">ĐỘI B</div>
+            <div class="team-bar"></div>
         </div>
-        
-        <div class="time" id="matchTime">00:00</div>
+        <div class="score-box" id="score2_1">0</div>
     </div>
 
+    <!-- SKIN 2 -->
+    <div class="skin2 hidden" id="skin2">
+        <div class="team-box left">
+            <div class="team-name" id="team1Name2">ĐỘI A</div>
+            <div class="score" id="score1_2">0</div>
+        </div>
+        <div class="time-box">
+            <div class="time" id="time2">00:00</div>
+        </div>
+        <div class="team-box right">
+            <div class="score" id="score2_2">0</div>
+            <div class="team-name" id="team2Name2">ĐỘI B</div>
+        </div>
+    </div>
+
+    <!-- SKIN 3 -->
+    <div class="skin3 hidden" id="skin3">
+        <div class="top-row">
+            <div class="team-box left">
+                <div class="team-name" id="team1Name3">ĐỘI A</div>
+            </div>
+            <div class="score-box">
+                <div class="score" id="score1_3">0</div>
+                <div class="separator">-</div>
+                <div class="score" id="score2_3">0</div>
+            </div>
+            <div class="team-box right">
+                <div class="team-name" id="team2Name3">ĐỘI B</div>
+            </div>
+        </div>
+        <div class="time-box">
+            <div class="time" id="time3">00:00</div>
+        </div>
+    </div>
+
+    <!-- SKIN 4 -->
+    <div class="skin4 hidden" id="skin4">
+        <div class="top-row">
+            <div class="team-box left">
+                <div class="team-name" id="team1Name4">ĐỘI A</div>
+            </div>
+            <div class="center-box">
+                <div class="score-row">
+                    <div class="score" id="score1_4">0</div>
+                    <div class="logo-center">⚽</div>
+                    <div class="score" id="score2_4">0</div>
+                </div>
+            </div>
+            <div class="team-box right">
+                <div class="team-name" id="team2Name4">ĐỘI B</div>
+            </div>
+        </div>
+        <div class="time" id="time4">00:00</div>
+    </div>
+
+    <!-- SKIN 5 -->
+    <div class="skin5 hidden" id="skin5">
+        <h1>ĐANG PHÁT TRIỂN</h1>
+    </div>
+
+
     <script type="module">
-        // Cấu hình Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyA5j17jgErGX0cwvEiQfc3FvDy_QW2ctho",
             authDomain: "live-bong-da-2670d.firebaseapp.com",
@@ -164,47 +453,58 @@
             measurementId: "G-XVZ651QR4T"
         };
 
-        // Import Firebase
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-        // Khởi tạo Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-
-        // Lắng nghe thay đổi dữ liệu
-        const scoreRef = ref(database, 'match');
+        const matchRef = ref(database, 'match');
         
-        onValue(scoreRef, (snapshot) => {
+        let previousScore1 = 0;
+        let previousScore2 = 0;
+        let currentSkin = '1';
+
+        onValue(matchRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                updateScoreboard(data);
+                updateDisplay(data);
             }
         });
 
-        let previousScore1 = 0;
-        let previousScore2 = 0;
-
-        function updateScoreboard(data) {
-            const scoreboard = document.getElementById('scoreboard');
-            
-            // Hiển thị bảng tỉ số nếu đang ẩn
-            if (data.visible !== false) {
-                scoreboard.classList.remove('hidden');
-            } else {
-                scoreboard.classList.add('hidden');
+        function updateDisplay(data) {
+            // Kiểm tra visible
+            if (data.visible === false || data.mode === 'off') {
+                document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
                 return;
             }
 
-            // Cập nhật tên đội
-            document.getElementById('team1Name').textContent = data.team1 || 'ĐỘI 1';
-            document.getElementById('team2Name').textContent = data.team2 || 'ĐỘI 2';
-            
-            // Cập nhật logo (emoji hoặc text)
-            document.getElementById('team1Logo').textContent = data.logo1 || '⚽';
-            document.getElementById('team2Logo').textContent = data.logo2 || '⚽';
-            
-            // Kiểm tra có bàn thắng mới không
+            // Chuyển skin
+            if (data.skin && data.skin !== currentSkin) {
+                document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
+                document.getElementById('skin' + data.skin).classList.remove('hidden');
+                currentSkin = data.skin;
+            }
+
+            // Cập nhật dữ liệu cho tất cả skin
+            for (let i = 1; i <= 5; i++) {
+                if (document.getElementById('team1Name' + i)) {
+                    document.getElementById('team1Name' + i).textContent = data.team1 || 'ĐỘI A';
+                }
+                if (document.getElementById('team2Name' + i)) {
+                    document.getElementById('team2Name' + i).textContent = data.team2 || 'ĐỘI B';
+                }
+                if (document.getElementById('score1_' + i)) {
+                    document.getElementById('score1_' + i).textContent = data.score1 || 0;
+                }
+                if (document.getElementById('score2_' + i)) {
+                    document.getElementById('score2_' + i).textContent = data.score2 || 0;
+                }
+                if (document.getElementById('time' + i)) {
+                    document.getElementById('time' + i).textContent = data.time || '00:00';
+                }
+            }
+
+            // Kiểm tra bàn thắng mới
             const newScore1 = data.score1 || 0;
             const newScore2 = data.score2 || 0;
             
@@ -212,15 +512,8 @@
                 showGoalAnimation();
             }
             
-            // Cập nhật tỉ số
-            document.getElementById('score1').textContent = newScore1;
-            document.getElementById('score2').textContent = newScore2;
-            
             previousScore1 = newScore1;
             previousScore2 = newScore2;
-            
-            // Cập nhật thời gian
-            document.getElementById('matchTime').textContent = data.time || '00:00';
         }
 
         function showGoalAnimation() {
