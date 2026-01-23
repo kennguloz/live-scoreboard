@@ -17,11 +17,17 @@
             overflow: hidden;
         }
         
-        /* ĐIỀU CHỈNH KÍCH THƯỚC TẤT CẢ SKIN Ở ĐÂY */
+        /* ===== ĐIỀU CHỈNH BẢNG TỈ SỐ Ở ĐÂY ===== */
         .skin1, .skin2, .skin3, .skin4, .skin5 {
+            /* Kích thước: 0.5 = 50%, 0.65 = 65%, 1.0 = 100% */
             transform: scale(0.50);
             transform-origin: top right;
+            
+            /* Vị trí: top (từ trên), right (từ phải) */
+            top: 20px;
+            right: 20px;
         }
+        /* ========================================= */
         
         .hidden {
             display: none !important;
@@ -30,8 +36,6 @@
         /* SKIN 1 - Vàng Xanh Navy */
         .skin1 {
             position: fixed;
-            top: 20px;
-            right: 20px;
             display: flex;
             align-items: stretch;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -104,8 +108,6 @@
         /* SKIN 2 - Đỏ Xanh Dương */
         .skin2 {
             position: fixed;
-            top: 20px;
-            right: 20px;
             display: flex;
             align-items: stretch;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -164,8 +166,6 @@
         /* SKIN 3 - Xanh Lá */
         .skin3 {
             position: fixed;
-            top: 20px;
-            right: 20px;
             display: flex;
             flex-direction: column;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -238,8 +238,6 @@
         /* SKIN 4 - Cam Navy */
         .skin4 {
             position: fixed;
-            top: 20px;
-            right: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -324,8 +322,6 @@
         /* SKIN 5 - Đang Phát Triển */
         .skin5 {
             position: fixed;
-            top: 50%;
-            left: 50%;
             transform: translate(-50%, -50%);
             background: white;
             padding: 60px 100px;
@@ -488,6 +484,16 @@
             if (data.mode === 'off') {
                 document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
                 return;
+            }
+            
+            // Cập nhật vị trí nếu có
+            if (data.position) {
+                const top = data.position.top || 20;
+                const right = data.position.right || 20;
+                document.querySelectorAll('[id^="skin"]').forEach(el => {
+                    el.style.top = top + 'px';
+                    el.style.right = right + 'px';
+                });
             }
             
             // Hiện lại khi chọn mode khác
