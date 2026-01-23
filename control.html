@@ -397,6 +397,7 @@
         <div class="control-tabs">
             <button class="tab-btn active" onclick="switchTab('info')">THÔNG TIN TRẬN ĐẤU</button>
             <button class="tab-btn" onclick="switchTab('control')">QUẢN LÝ TRẬN ĐẤU</button>
+            <button class="tab-btn" onclick="switchTab('preview')">XEM TRƯỚC SKIN</button>
         </div>
 
         <!-- Tab: Thông Tin Trận Đấu -->
@@ -622,6 +623,75 @@
             </div>
             
             <button class="btn" style="width: 100%; background: #007bff; color: white;" onclick="updateAll()">🔄 CẬP NHẬT</button>
+        </div>
+
+        <!-- Tab: Xem Trước Skin -->
+        <div id="previewTab" class="tab-content">
+            <h2 style="text-align: center; color: #667eea; margin-bottom: 20px; font-size: 24px;">⚽ XEM TRƯỚC SKIN 2 - BẢNG TỈ SỐ 5 Ô</h2>
+            <div style="text-align: center; color: #666; margin-bottom: 30px; font-size: 14px;">Giao diện chuẩn với 5 ô riêng biệt: Tên Đội 1 | Tỉ Số 1 | Thời Gian | Tỉ Số 2 | Tên Đội 2</div>
+            
+            <!-- BẢNG TỈ SỐ - 5 ô riêng biệt -->
+            <div style="display: flex; align-items: stretch; box-shadow: none; height: auto; border-radius: 0; overflow: visible; font-family: Arial, sans-serif; margin-bottom: 40px;" id="previewScoreboard">
+                <!-- Ô 1: Tên Đội 1 (Đỏ) -->
+                <div style="padding: 15px 15px; display: flex; align-items: center; justify-content: center; flex: 1; background: #FF0000; min-width: 0;">
+                    <div style="color: white; font-size: 32px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px; white-space: nowrap; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); overflow: hidden; text-overflow: ellipsis;" id="previewTeam1Name">TÊN ĐỘI 1</div>
+                </div>
+                
+                <!-- Ô 2: Tỉ Số Đội 1 (Đỏ Đậm) -->
+                <div style="padding: 15px 15px; display: flex; align-items: center; justify-content: center; background: #CC0000;">
+                    <div style="color: white; font-size: 48px; font-weight: bold; text-shadow: 4px 4px 8px rgba(0,0,0,0.7); text-align: center; line-height: 1;" id="previewScore1">2</div>
+                </div>
+                
+                <!-- Ô 3: Thời Gian (Đỏ Tối) -->
+                <div style="background: #AA0000; padding: 15px 15px; display: flex; align-items: center; justify-content: center;">
+                    <div style="color: white; font-size: 40px; font-weight: bold; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); letter-spacing: 0px;" id="previewTime">03:40</div>
+                </div>
+                
+                <!-- Ô 4: Tỉ Số Đội 2 (Xanh Đậm) -->
+                <div style="padding: 15px 15px; display: flex; align-items: center; justify-content: center; background: #0066CC;">
+                    <div style="color: white; font-size: 48px; font-weight: bold; text-shadow: 4px 4px 8px rgba(0,0,0,0.7); text-align: center; line-height: 1;" id="previewScore2">3</div>
+                </div>
+                
+                <!-- Ô 5: Tên Đội 2 (Xanh) -->
+                <div style="padding: 15px 15px; display: flex; align-items: center; justify-content: center; flex: 1; background: #0080FF; min-width: 0;">
+                    <div style="color: white; font-size: 32px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px; white-space: nowrap; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); overflow: hidden; text-overflow: ellipsis;" id="previewTeam2Name">TÊN ĐỘI 2</div>
+                </div>
+            </div>
+            
+            <!-- ĐIỀU KHIỂN -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: bold; color: #333; font-size: 14px;">Tên Đội 1:</label>
+                    <input type="text" id="previewTeam1Input" value="TÊN ĐỘI 1" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" onchange="updatePreview()">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: bold; color: #333; font-size: 14px;">Tên Đội 2:</label>
+                    <input type="text" id="previewTeam2Input" value="TÊN ĐỘI 2" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" onchange="updatePreview()">
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;">
+                <button class="btn btn-increase" onclick="changePreviewScore(1, 1)">+1 Đội 1</button>
+                <button class="btn btn-increase" onclick="changePreviewScore(2, 1)">+1 Đội 2</button>
+                <button class="btn btn-decrease" onclick="changePreviewScore(1, -1)">-1 Đội 1</button>
+                <button class="btn btn-decrease" onclick="changePreviewScore(2, -1)">-1 Đội 2</button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                <button class="time-btn" style="padding: 10px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; transition: all 0.3s;" onclick="setPreviewTime('00:00')">Đặt 00:00</button>
+                <button class="time-btn" style="padding: 10px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; transition: all 0.3s;" onclick="setPreviewTime('20:00')">Đặt 20:00</button>
+                <button class="time-btn" style="padding: 10px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; transition: all 0.3s;" onclick="setPreviewTime('45:00')">Đặt 45:00</button>
+                <button class="time-btn" style="padding: 10px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; transition: all 0.3s;" onclick="startPreviewTimer()">Bắt Đầu Đếm</button>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 20px; border-left: 4px solid #667eea;">
+                <p style="color: #666; font-size: 13px; margin: 5px 0;"><strong>📌 Cấu trúc Skin 2:</strong></p>
+                <p style="color: #666; font-size: 13px; margin: 5px 0;">✓ Ô 1 (Đỏ): Tên Đội 1 - Nền #FF0000</p>
+                <p style="color: #666; font-size: 13px; margin: 5px 0;">✓ Ô 2 (Đỏ Đậm): Tỉ Số Đội 1 - Nền #CC0000</p>
+                <p style="color: #666; font-size: 13px; margin: 5px 0;">✓ Ô 3 (Đỏ Tối): Thời Gian - Nền #AA0000</p>
+                <p style="color: #666; font-size: 13px; margin: 5px 0;">✓ Ô 4 (Xanh Đậm): Tỉ Số Đội 2 - Nền #0066CC</p>
+                <p style="color: #666; font-size: 13px; margin: 5px 0;">✓ Ô 5 (Xanh): Tên Đội 2 - Nền #0080FF</p>
+            </div>
         </div>
 
         <div class="status disconnected" id="status">
@@ -950,6 +1020,9 @@
             } else if (tab === 'control') {
                 document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
                 document.getElementById('controlTab').classList.add('active');
+            } else if (tab === 'preview') {
+                document.querySelector('.tab-btn:nth-child(3)').classList.add('active');
+                document.getElementById('previewTab').classList.add('active');
             }
         };
 
@@ -970,6 +1043,47 @@
                 saveToFirebase();
             }, 1000);
         }
+        
+        // Preview functions
+        let previewScore1 = 2;
+        let previewScore2 = 3;
+        let previewTimerInterval = null;
+        
+        window.updatePreview = function() {
+            document.getElementById('previewTeam1Name').textContent = document.getElementById('previewTeam1Input').value;
+            document.getElementById('previewTeam2Name').textContent = document.getElementById('previewTeam2Input').value;
+        };
+        
+        window.changePreviewScore = function(team, delta) {
+            if (team === 1) {
+                previewScore1 = Math.max(0, previewScore1 + delta);
+                document.getElementById('previewScore1').textContent = previewScore1;
+            } else {
+                previewScore2 = Math.max(0, previewScore2 + delta);
+                document.getElementById('previewScore2').textContent = previewScore2;
+            }
+        };
+        
+        window.setPreviewTime = function(time) {
+            if (previewTimerInterval) clearInterval(previewTimerInterval);
+            document.getElementById('previewTime').textContent = time;
+        };
+        
+        window.startPreviewTimer = function() {
+            if (previewTimerInterval) clearInterval(previewTimerInterval);
+            
+            const timeStr = document.getElementById('previewTime').textContent;
+            const [mins, secs] = timeStr.split(':').map(Number);
+            let totalSeconds = mins * 60 + secs;
+            
+            previewTimerInterval = setInterval(() => {
+                totalSeconds++;
+                const m = Math.floor(totalSeconds / 60);
+                const s = totalSeconds % 60;
+                document.getElementById('previewTime').textContent = 
+                    `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }, 1000);
+        };
         
         function startCountup() {
             const startTime = currentData.time.split(':');
