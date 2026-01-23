@@ -21,7 +21,7 @@
             display: none !important;
         }
         
-        /* SKIN 2 - Sửa lỗi và cải thiện */
+        /* SKIN 2 - Cấu trúc 5 ô riêng biệt */
         .scoreboard {
             position: fixed;
             top: 25px;
@@ -39,23 +39,36 @@
             font-family: Arial, sans-serif;
         }
         
-        .team-box {
-            padding: 0 25px;
+        .team-name-box {
+            padding: 0 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            min-width: 180px;
-            position: relative;
+            justify-content: center;
+            min-width: 160px;
         }
         
-        .team-box.left {
+        .team-name-box.left {
             background: #FF0000;
-            justify-content: space-between;
         }
         
-        .team-box.right {
+        .team-name-box.right {
             background: #0080FF;
-            justify-content: space-between;
+        }
+        
+        .score-box {
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 50px;
+        }
+        
+        .score-box.left {
+            background: #CC0000;
+        }
+        
+        .score-box.right {
+            background: #0066CC;
         }
         
         .team-name {
@@ -71,21 +84,15 @@
         
         .score {
             color: white;
-            font-size: 42px;
+            font-size: 36px;
             font-weight: 900;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
-            min-width: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             text-align: center;
             font-family: Arial, sans-serif;
-            /* Làm nổi bật tỉ số */
-            background: rgba(255,255,255,0.1);
-            border-radius: 8px;
-            padding: 2px 8px;
-            border: 2px solid rgba(255,255,255,0.3);
         }
         
         .time-box {
-            background: #CC0000;
+            background: #AA0000;
             padding: 0 20px;
             display: flex;
             align-items: center;
@@ -199,18 +206,22 @@
 </head>
 <body>
 
-    <!-- BẢNG TỈ SỐ - Sửa lỗi tỉ số đội 2 -->
+    <!-- BẢNG TỈ SỐ - 5 ô riêng biệt như ảnh -->
     <div class="scoreboard" id="scoreboard">
-        <div class="team-box left">
+        <div class="team-name-box left">
             <div class="team-name" id="team1Name">FC TRUNG THÀNH</div>
+        </div>
+        <div class="score-box left">
             <div class="score" id="score1">1</div>
         </div>
         <div class="time-box">
             <div class="time" id="time">03:51</div>
         </div>
-        <div class="team-box right">
-            <div class="team-name" id="team2Name">FC TÂN LẬP</div>
+        <div class="score-box right">
             <div class="score" id="score2">1</div>
+        </div>
+        <div class="team-name-box right">
+            <div class="team-name" id="team2Name">FC TÂN LẬP</div>
         </div>
     </div>
     
