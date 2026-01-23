@@ -631,30 +631,30 @@
             <div style="text-align: center; color: #666; margin-bottom: 30px; font-size: 14px;">Giao diện chuẩn với 5 ô riêng biệt: Tên Đội 1 | Tỉ Số 1 | Thời Gian | Tỉ Số 2 | Tên Đội 2</div>
             
             <!-- BẢNG TỈ SỐ - 5 ô riêng biệt -->
-            <div style="display: flex; align-items: stretch; box-shadow: none; height: auto; border-radius: 0; overflow: visible; font-family: Arial, sans-serif; margin-bottom: 40px;" id="previewScoreboard">
+            <div style="display: flex; align-items: stretch; box-shadow: 0 8px 25px rgba(0,0,0,0.4); height: auto; border-radius: 0; overflow: visible; font-family: Arial, sans-serif; margin-bottom: 40px; min-width: 600px;" id="previewScoreboard">
                 <!-- Ô 1: Tên Đội 1 (Đỏ) -->
-                <div style="padding: 15px 15px; display: flex; align-items: center; justify-content: center; flex: 1; background: #FF0000; min-width: 0;">
-                    <div style="color: white; font-size: 32px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px; white-space: nowrap; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); overflow: hidden; text-overflow: ellipsis;" id="previewTeam1Name">TÊN ĐỘI 1</div>
+                <div style="padding: 8px 12px; display: flex; align-items: center; justify-content: center; flex: 1; background: #FF0000; min-width: 0;">
+                    <div style="color: white; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px; white-space: nowrap; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); overflow: hidden; text-overflow: ellipsis;" id="previewTeam1Name">FC TRUNG THÀNH</div>
                 </div>
                 
                 <!-- Ô 2: Tỉ Số Đội 1 (Đỏ Đậm) -->
-                <div style="padding: 15px 15px; display: flex; align-items: center; justify-content: center; background: #CC0000;">
-                    <div style="color: white; font-size: 48px; font-weight: bold; text-shadow: 4px 4px 8px rgba(0,0,0,0.7); text-align: center; line-height: 1;" id="previewScore1">2</div>
+                <div style="padding: 8px 8px; display: flex; align-items: center; justify-content: center; flex: 0.25; background: #CC0000;">
+                    <div style="color: white; font-size: 36px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); text-align: center; line-height: 1;" id="previewScore1">1</div>
                 </div>
                 
                 <!-- Ô 3: Thời Gian (Đỏ Tối) -->
-                <div style="background: #AA0000; padding: 15px 15px; display: flex; align-items: center; justify-content: center;">
-                    <div style="color: white; font-size: 40px; font-weight: bold; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); letter-spacing: 0px;" id="previewTime">03:40</div>
+                <div style="background: #AA0000; padding: 8px 12px; display: flex; align-items: center; justify-content: center; flex: 0.5;">
+                    <div style="color: white; font-size: 20px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); letter-spacing: 0px;" id="previewTime">03:51</div>
                 </div>
                 
                 <!-- Ô 4: Tỉ Số Đội 2 (Xanh Đậm) -->
-                <div style="padding: 15px 15px; display: flex; align-items: center; justify-content: center; background: #0066CC;">
-                    <div style="color: white; font-size: 48px; font-weight: bold; text-shadow: 4px 4px 8px rgba(0,0,0,0.7); text-align: center; line-height: 1;" id="previewScore2">3</div>
+                <div style="padding: 8px 8px; display: flex; align-items: center; justify-content: center; flex: 0.25; background: #0066CC;">
+                    <div style="color: white; font-size: 36px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); text-align: center; line-height: 1;" id="previewScore2">1</div>
                 </div>
                 
                 <!-- Ô 5: Tên Đội 2 (Xanh) -->
-                <div style="padding: 15px 15px; display: flex; align-items: center; justify-content: center; flex: 1; background: #0080FF; min-width: 0;">
-                    <div style="color: white; font-size: 32px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px; white-space: nowrap; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); overflow: hidden; text-overflow: ellipsis;" id="previewTeam2Name">TÊN ĐỘI 2</div>
+                <div style="padding: 8px 12px; display: flex; align-items: center; justify-content: center; flex: 1; background: #0080FF; min-width: 0;">
+                    <div style="color: white; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 0px; white-space: nowrap; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); overflow: hidden; text-overflow: ellipsis;" id="previewTeam2Name">FC TÂN LẬP</div>
                 </div>
             </div>
             
@@ -662,11 +662,11 @@
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;">
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <label style="font-weight: bold; color: #333; font-size: 14px;">Tên Đội 1:</label>
-                    <input type="text" id="previewTeam1Input" value="TÊN ĐỘI 1" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" onchange="updatePreview()">
+                    <input type="text" id="previewTeam1Input" value="FC TRUNG THÀNH" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" onchange="updatePreview()">
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <label style="font-weight: bold; color: #333; font-size: 14px;">Tên Đội 2:</label>
-                    <input type="text" id="previewTeam2Input" value="TÊN ĐỘI 2" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" onchange="updatePreview()">
+                    <input type="text" id="previewTeam2Input" value="FC TÂN LẬP" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;" onchange="updatePreview()">
                 </div>
             </div>
             
