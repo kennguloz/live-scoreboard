@@ -382,68 +382,6 @@
 
         <!-- Tab: Thông Tin Trận Đấu -->
         <div id="infoTab" class="tab-content active">
-            <div class="info-section">
-                <h3>🎨 Chọn Mẫu Poster</h3>
-                <div class="poster-grid">
-                    <div class="poster-option active" onclick="selectPoster('tretrung')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%23ff9800' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3ETRẺ TRUNG%3C/text%3E%3C/svg%3E" alt="Trẻ Trung">
-                        <span>TRẺ TRUNG</span>
-                    </div>
-                    <div class="poster-option" onclick="selectPoster('haoquang')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%23004d40' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3EHÁO QUANG%3C/text%3E%3C/svg%3E" alt="Háo Quang">
-                        <span>HÁO QUANG</span>
-                    </div>
-                    <div class="poster-option" onclick="selectPoster('cautruc')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%231a237e' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3ECẤU TRÚC%3C/text%3E%3C/svg%3E" alt="Cấu Trúc">
-                        <span>CẤU TRÚC</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="info-section">
-                <h3>📍 Cài Đặt Logo</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                    <button class="btn" style="background: #2196F3; color: white; padding: 10px;" onclick="switchLogoTab('taitro')">TÀI TRỢ</button>
-                    <button class="btn" style="background: #9C27B0; color: white; padding: 10px;" onclick="switchLogoTab('tochuc')">TỔ CHỨC</button>
-                    <button class="btn" style="background: #FF5722; color: white; padding: 10px;" onclick="switchLogoTab('truyenthong')">TRUYỀN THÔNG</button>
-                </div>
-                
-                <div id="logoTabContent">
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đơn Vị:</label>
-                        <input type="text" id="logoName" placeholder="Nhập tên đơn vị" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">Mã Logo:</label>
-                        <input type="text" id="logoCode" placeholder="Nhập mã logo" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">Hiển Thị Trong Trận:</label>
-                        <div class="logo-position-group">
-                            <label>
-                                <input type="checkbox" id="logoTop" value="top">
-                                <span>GÓC TRÁI TRÊN</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" id="logoBottom" value="bottom">
-                                <span>GÓC TRÁI DƯỚI</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" id="logoRight" value="right">
-                                <span>GÓC PHẢI DƯỚI</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <button class="btn" style="background: #28a745; color: white; padding: 12px; font-weight: bold;" onclick="addLogo()">THÊM</button>
-                        <button class="btn" style="background: #dc3545; color: white; padding: 12px; font-weight: bold;" onclick="removeLogo()">XÓA</button>
-                    </div>
-                </div>
-            </div>
-            
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
                 <div class="info-section">
                     <h3>⚽ Đội 1</h3>
@@ -467,50 +405,114 @@
             </div>
             
             <div class="info-section">
-                <h3>📢 Chữ Chạy</h3>
-                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                        <input type="radio" name="textMode" value="none" checked onchange="updateRunningText()">
-                        <span>KHÔNG</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                        <input type="radio" name="textMode" value="continuous" onchange="updateRunningText()">
-                        <span>LIÊN TỤC</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                        <input type="radio" name="textMode" value="every2min" onchange="updateRunningText()">
-                        <span>MỖI 2'</span>
-                    </label>
+                <h3>🎨 Chọn Mẫu Poster & Cài Đặt Logo</h3>
+                <div class="poster-grid">
+                    <div class="poster-option active" onclick="selectPoster('tretrung')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%23ff9800' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3ETRẺ TRUNG%3C/text%3E%3C/svg%3E" alt="Trẻ Trung">
+                        <span>TRẺ TRUNG</span>
+                    </div>
+                    <div class="poster-option" onclick="selectPoster('haoquang')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%23004d40' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3EHÁO QUANG%3C/text%3E%3C/svg%3E" alt="Háo Quang">
+                        <span>HÁO QUANG</span>
+                    </div>
+                    <div class="poster-option" onclick="selectPoster('cautruc')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%231a237e' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3ECẤU TRÚC%3C/text%3E%3C/svg%3E" alt="Cấu Trúc">
+                        <span>CẤU TRÚC</span>
+                    </div>
                 </div>
-                <textarea id="runningTextContent" 
-                          placeholder="Nhập nội dung chữ chạy..."
-                          rows="4"
-                          style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;"></textarea>
+                
+                <div style="margin-top: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <button class="btn" style="background: #2196F3; color: white; padding: 10px;" onclick="switchLogoTab('taitro')">TÀI TRỢ</button>
+                        <button class="btn" style="background: #9C27B0; color: white; padding: 10px;" onclick="switchLogoTab('tochuc')">TỔ CHỨC</button>
+                        <button class="btn" style="background: #FF5722; color: white; padding: 10px;" onclick="switchLogoTab('truyenthong')">TRUYỀN THÔNG</button>
+                    </div>
+                    
+                    <div id="logoTabContent">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đơn Vị:</label>
+                            <input type="text" id="logoName" placeholder="Nhập tên đơn vị" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Logo:</label>
+                            <input type="file" id="logoFileUpload" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
+                            <div id="logoPreviewUpload" style="margin-top: 10px; text-align: center;"></div>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Hiển Thị Trong Trận:</label>
+                            <div class="logo-position-group">
+                                <label>
+                                    <input type="checkbox" id="logoTop" value="top">
+                                    <span>GÓC TRÁI TRÊN</span>
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="logoBottom" value="bottom">
+                                    <span>GÓC TRÁI DƯỚI</span>
+                                </label>
+                                <label>
+                                    <input type="checkbox" id="logoRight" value="right">
+                                    <span>GÓC PHẢI DƯỚI</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <button class="btn" style="background: #28a745; color: white; padding: 12px; font-weight: bold;" onclick="addLogo()">THÊM</button>
+                            <button class="btn" style="background: #dc3545; color: white; padding: 12px; font-weight: bold;" onclick="removeLogo()">XÓA</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="info-section">
-                <h3>🎨 Chọn Giao Diện</h3>
-                <div class="skin-selector">
-                    <label class="skin-option">
-                        <input type="radio" name="skin" value="1" checked onchange="changeSkin()">
-                        <span>SKIN 1 - Vàng Xanh Navy</span>
-                    </label>
-                    <label class="skin-option">
-                        <input type="radio" name="skin" value="2" onchange="changeSkin()">
-                        <span>SKIN 2 - Đỏ Xanh Dương</span>
-                    </label>
-                    <label class="skin-option">
-                        <input type="radio" name="skin" value="3" onchange="changeSkin()">
-                        <span>SKIN 3 - Xanh Lá</span>
-                    </label>
-                    <label class="skin-option">
-                        <input type="radio" name="skin" value="4" onchange="changeSkin()">
-                        <span>SKIN 4 - Cam Navy</span>
-                    </label>
-                    <label class="skin-option">
-                        <input type="radio" name="skin" value="5" onchange="changeSkin()">
-                        <span>SKIN 5 - Đang Phát Triển</span>
-                    </label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                <div class="info-section">
+                    <h3>📢 Chữ Chạy</h3>
+                    <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="textMode" value="none" checked onchange="updateRunningText()">
+                            <span>KHÔNG</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="textMode" value="continuous" onchange="updateRunningText()">
+                            <span>LIÊN TỤC</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="textMode" value="every2min" onchange="updateRunningText()">
+                            <span>MỖI 2'</span>
+                        </label>
+                    </div>
+                    <textarea id="runningTextContent" 
+                              placeholder="Nhập nội dung chữ chạy..."
+                              rows="4"
+                              style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;"></textarea>
+                </div>
+                
+                <div class="info-section">
+                    <h3>🎨 Chọn Giao Diện</h3>
+                    <div class="skin-selector">
+                        <label class="skin-option">
+                            <input type="radio" name="skin" value="1" checked onchange="changeSkin()">
+                            <span>SKIN 1 - Vàng Xanh Navy</span>
+                        </label>
+                        <label class="skin-option">
+                            <input type="radio" name="skin" value="2" onchange="changeSkin()">
+                            <span>SKIN 2 - Đỏ Xanh Dương</span>
+                        </label>
+                        <label class="skin-option">
+                            <input type="radio" name="skin" value="3" onchange="changeSkin()">
+                            <span>SKIN 3 - Xanh Lá</span>
+                        </label>
+                        <label class="skin-option">
+                            <input type="radio" name="skin" value="4" onchange="changeSkin()">
+                            <span>SKIN 4 - Cam Navy</span>
+                        </label>
+                        <label class="skin-option">
+                            <input type="radio" name="skin" value="5" onchange="changeSkin()">
+                            <span>SKIN 5 - Đang Phát Triển</span>
+                        </label>
+                    </div>
                 </div>
             </div>
             
@@ -752,27 +754,38 @@
         
         window.addLogo = function() {
             const name = document.getElementById('logoName').value;
-            const code = document.getElementById('logoCode').value;
             const positions = [];
             
             if (document.getElementById('logoTop').checked) positions.push('top');
             if (document.getElementById('logoBottom').checked) positions.push('bottom');
             if (document.getElementById('logoRight').checked) positions.push('right');
             
+            if (!name) {
+                alert('Vui lòng nhập tên đơn vị!');
+                return;
+            }
+            
+            if (!currentSponsorLogo) {
+                alert('Vui lòng chọn logo!');
+                return;
+            }
+            
             if (!currentData.logos) currentData.logos = [];
             currentData.logos.push({
                 name: name,
-                code: code,
+                logo: currentSponsorLogo,
                 positions: positions,
                 type: currentData.currentLogoTab || 'taitro'
             });
             
             // Clear form
             document.getElementById('logoName').value = '';
-            document.getElementById('logoCode').value = '';
+            document.getElementById('logoFileUpload').value = '';
+            document.getElementById('logoPreviewUpload').innerHTML = '';
             document.getElementById('logoTop').checked = false;
             document.getElementById('logoBottom').checked = false;
             document.getElementById('logoRight').checked = false;
+            currentSponsorLogo = null;
             
             saveToFirebase();
         };
@@ -812,6 +825,9 @@
             document.getElementById('logoFile2').addEventListener('change', function(e) {
                 handleLogoUpload(e, 2);
             });
+            document.getElementById('logoFileUpload').addEventListener('change', function(e) {
+                handleSponsorLogoUpload(e);
+            });
         });
         
         function handleLogoUpload(event, team) {
@@ -830,6 +846,21 @@
                             '<img src="' + base64 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
                     }
                     saveToFirebase();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        let currentSponsorLogo = null;
+        
+        function handleSponsorLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentSponsorLogo = e.target.result;
+                    document.getElementById('logoPreviewUpload').innerHTML = 
+                        '<img src="' + currentSponsorLogo + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
                 };
                 reader.readAsDataURL(file);
             }
