@@ -426,7 +426,7 @@
                 </div>
             </div>
             
-            <button class="btn" style="width: 100%; background: #28a745; color: white; font-size: 18px; padding: 15px; font-weight: bold; margin-bottom: 20px;" onclick="updateTeamInfo()">CẬP NHẬT & HIỂN THỊ</button>
+            <button class="btn" style="width: 100%; background: #28a745; color: white; font-size: 18px; padding: 15px; font-weight: bold; margin-bottom: 20px;" onclick="updateTeamInfo()">CẬP NHẬT TÊN ĐỘI</button>
             
             <div class="info-section poster-section">
                 <h3>🎨 Chọn Mẫu Poster & Cài Đặt Logo</h3>
@@ -942,17 +942,9 @@
         };
         
         window.updateTeamInfo = function() {
-            // Cập nhật tên đội
+            // Chỉ cập nhật tên đội
             currentData.team1 = document.getElementById('team1Info').value;
             currentData.team2 = document.getElementById('team2Info').value;
-            
-            // Tự động chuyển sang mode hiển thị tỉ số
-            currentData.mode = 'score';
-            currentData.visible = true;
-            
-            // Cập nhật radio button
-            const scoreRadio = document.getElementById('modeScore');
-            if (scoreRadio) scoreRadio.checked = true;
             
             // Lưu vào Firebase
             saveToFirebase();
