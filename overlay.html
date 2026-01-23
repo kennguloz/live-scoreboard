@@ -107,61 +107,67 @@
         
         /* SKIN 2 - Đỏ Xanh Dương (Giống mẫu) */
         .skin2 {
-            position: fixed;
-            display: flex;
-            align-items: stretch;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: fixed !important;
+            display: flex !important;
+            align-items: stretch !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
             opacity: 0;
-            animation: slideIn 0.5s ease forwards;
-            height: 70px;
+            animation: slideIn 0.5s ease forwards !important;
+            height: 70px !important;
+            flex-direction: row !important;
         }
         
         .skin2 .team-box {
-            padding: 0 40px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            min-width: 320px;
+            padding: 0 40px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 15px !important;
+            min-width: 320px !important;
+            flex-shrink: 0 !important;
         }
         
         .skin2 .team-box.left {
-            background: #ff0000;
-            flex-direction: row;
+            background: #ff0000 !important;
+            flex-direction: row !important;
         }
         
         .skin2 .team-box.right {
-            background: #0066ff;
-            flex-direction: row-reverse;
+            background: #0066ff !important;
+            flex-direction: row-reverse !important;
         }
         
         .skin2 .team-name {
-            color: white;
-            font-size: 22px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: white !important;
+            font-size: 22px !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            white-space: nowrap !important;
         }
         
         .skin2 .score {
-            color: white;
-            font-size: 48px;
-            font-weight: 900;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: white !important;
+            font-size: 48px !important;
+            font-weight: 900 !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3) !important;
+            line-height: 1 !important;
         }
         
         .skin2 .time-box {
-            background: #cc0000;
-            padding: 0 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #cc0000 !important;
+            padding: 0 35px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
         }
         
         .skin2 .time {
-            color: white;
-            font-size: 28px;
-            font-weight: 900;
+            color: white !important;
+            font-size: 28px !important;
+            font-weight: 900 !important;
+            line-height: 1 !important;
         }
         
         /* SKIN 3 - Xanh Lá */
@@ -422,7 +428,7 @@
         <div class="score-box" id="score2_1">3</div>
     </div>
 
-    <!-- SKIN 2 -->
+    <!-- SKIN 2 - Đỏ Xanh Dương (Thiết kế mới) -->
     <div class="skin2 hidden" id="skin2">
         <div class="team-box left">
             <div class="team-name" id="team1Name2">TÊN ĐỘI 1</div>
