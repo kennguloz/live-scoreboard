@@ -66,17 +66,21 @@
         }
         
         .btn-increase {
-            background: #007bff;
+            background: #28a745;
             color: white;
         }
         
         .btn-increase:hover {
-            background: #0056b3;
+            background: #218838;
         }
         
         .btn-decrease {
-            background: #007bff;
+            background: #dc3545;
             color: white;
+        }
+        
+        .btn-decrease:hover {
+            background: #c82333;
         }
         
         .control-tabs {
@@ -100,6 +104,14 @@
         .tab-btn.active {
             background: #007bff;
             color: white;
+        }
+        
+        .tab-btn:nth-child(1).active {
+            background: #ff8c00;
+        }
+        
+        .tab-btn:nth-child(2).active {
+            background: #9c27b0;
         }
         
         .tab-content {
@@ -301,7 +313,7 @@
                 </div>
             </div>
             
-            <button class="btn btn-increase" style="width: 100%;" onclick="updateAll()">CẬP NHẬT TẤT CẢ</button>
+            <button class="btn" style="width: 100%; background: #007bff; color: white;" onclick="updateAll()">CẬP NHẬT TẤT CẢ</button>
         </div>
 
         <!-- Tab: Skins -->
