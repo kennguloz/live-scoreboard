@@ -21,7 +21,7 @@
             display: none !important;
         }
         
-        /* SKIN 2 - Y hệt như mẫu */
+        /* SKIN 2 - 100% giống ảnh mẫu */
         .scoreboard {
             position: fixed;
             top: 25px;
@@ -31,11 +31,70 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
             opacity: 0;
             animation: slideIn 0.5s ease forwards;
-            height: 70px;
-            transform: scale(0.6);
+            height: 60px;
+            transform: scale(0.7);
             transform-origin: top right;
             border-radius: 0;
             overflow: hidden;
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+        
+        .team-box {
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            min-width: 200px;
+            position: relative;
+        }
+        
+        .team-box.left {
+            background: #FF0000;
+            justify-content: space-between;
+        }
+        
+        .team-box.right {
+            background: #0080FF;
+            justify-content: space-between;
+            flex-direction: row-reverse;
+        }
+        
+        .team-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+        
+        .score {
+            color: white;
+            font-size: 36px;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            min-width: 40px;
+            text-align: center;
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+        
+        .time-box {
+            background: #CC0000;
+            padding: 0 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+        }
+        
+        .time {
+            color: white;
+            font-size: 20px;
+            font-weight: 900;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-family: 'Arial Black', Arial, sans-serif;
         }
         
         .team-box {
@@ -136,7 +195,7 @@
 </head>
 <body>
 
-    <!-- BẢNG TỈ SỐ - Y hệt như mẫu -->
+    <!-- BẢNG TỈ SỐ - 100% giống ảnh mẫu -->
     <div class="scoreboard" id="scoreboard">
         <div class="team-box left">
             <div class="team-name" id="team1Name">TÊN ĐỘI 1</div>
