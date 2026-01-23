@@ -341,6 +341,27 @@
                     <span>SKIN 5 - Đang Phát Triển</span>
                 </label>
             </div>
+            
+            <h3 style="margin: 20px 0 15px 0;">Cài Đặt Chữ Chạy:</h3>
+            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="radio" name="textMode" value="none" checked onchange="updateRunningText()">
+                    <span>KHÔNG</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="radio" name="textMode" value="continuous" onchange="updateRunningText()">
+                    <span>LIÊN TỤC</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                    <input type="radio" name="textMode" value="every2min" onchange="updateRunningText()">
+                    <span>MỖI 2'</span>
+                </label>
+            </div>
+            <textarea id="runningTextContent" 
+                      placeholder="Nhập nội dung chữ chạy..."
+                      rows="4"
+                      style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; margin-bottom: 15px;"></textarea>
+            <button class="btn" style="width: 100%; background: #007bff; color: white;" onclick="applyRunningText()">ÁP DỤNG CHỮ CHẠY</button>
         </div>
 
         <div class="status disconnected" id="status">
@@ -376,7 +397,12 @@
             time: '00:00',
             mode: 'score',
             skin: '1',
-            visible: true
+            visible: true,
+            runningText: {
+                enabled: false,
+                mode: 'none',
+                content: ''
+            }
         };
         
         let timerInterval = null; // Lưu interval để có thể clear
@@ -463,6 +489,27 @@
             const selectedSkin = document.querySelector('input[name="skin"]:checked').value;
             currentData.skin = selectedSkin;
             saveToFirebase();
+        };
+        
+        window.updateRunningText = function() {
+            const mode = document.querySelector('input[name="textMode"]:checked').value;
+            currentData.runningText.mode = mode;
+            currentData.runningText.enabled = mode !== 'none';
+            saveToFirebase();
+        };
+        
+        window.applyRunningText = function() {
+            const mode = document.querySelector('input[name="textMode"]:checked').value;
+            const content = document.getElementById('runningTextContent').value;
+            
+            currentData.runningText = {
+                enabled: mode !== 'none',
+                mode: mode,
+                content: content
+            };
+            
+            saveToFirebase();
+            alert('Đã cập nhật chữ chạy!');
         };
 
         window.updateAll = function() {
