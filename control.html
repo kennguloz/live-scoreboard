@@ -430,7 +430,13 @@
             
             const selectedMode = document.querySelector('input[name="mode"]:checked').value;
             currentData.mode = selectedMode;
-            currentData.visible = selectedMode !== 'off';
+            
+            // Chỉ ẩn khi chọn TẮT, các mode khác đều hiện
+            if (selectedMode === 'off') {
+                currentData.visible = false;
+            } else {
+                currentData.visible = true;
+            }
             
             // Đếm lên từ thời gian chỉ định
             if (selectedMode === 'countup0') {
