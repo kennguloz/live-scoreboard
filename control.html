@@ -175,6 +175,18 @@
             font-weight: bold;
         }
         
+        .mode-option span {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .mode-option:has(input[type="radio"]:checked) span {
+            color: #007bff;
+            font-weight: bold;
+        }
+        
         .skin-selector {
             display: flex;
             flex-direction: column;
@@ -373,57 +385,57 @@
             <div class="info-section">
                 <h3>⏱️ Chế Độ Hiển Thị</h3>
                 <div class="mode-grid">
-                    <div class="mode-option">
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="poster" id="modePoster" onchange="changeMode()">
-                        <label for="modePoster">POSTER</label>
-                    </div>
-                    <div class="mode-option">
+                        <span>POSTER</span>
+                    </label>
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="intro" id="modeIntro" onchange="changeMode()">
-                        <label for="modeIntro">GIỚI THIỆU</label>
-                    </div>
-                    <div class="mode-option">
+                        <span>GIỚI THIỆU</span>
+                    </label>
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="lineup" id="modeLineup" onchange="changeMode()">
-                        <label for="modeLineup">DANH SÁCH</label>
-                    </div>
+                        <span>DANH SÁCH</span>
+                    </label>
                     
-                    <div class="mode-option">
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="score" id="modeScore" checked onchange="changeMode()">
-                        <label for="modeScore">TỈ SỐ DƯỚI</label>
-                    </div>
-                    <div class="mode-option">
+                        <span>TỈ SỐ DƯỚI</span>
+                    </label>
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="countup0" id="modeCountup0" onchange="changeMode()">
-                        <label for="modeCountup0">ĐẾM 0'</label>
-                    </div>
-                    <div class="mode-option">
+                        <span>ĐẾM 0'</span>
+                    </label>
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="halftime" id="modeHalftime" onchange="changeMode()">
-                        <label for="modeHalftime">NGHỈ HIỆP</label>
-                    </div>
+                        <span>NGHỈ HIỆP</span>
+                    </label>
                     
-                    <div class="mode-option">
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="countup20" id="modeCountup20" onchange="changeMode()">
-                        <label for="modeCountup20">ĐẾM 20'</label>
-                    </div>
-                    <div class="mode-option">
+                        <span>ĐẾM 20'</span>
+                    </label>
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="countup25" id="modeCountup25" onchange="changeMode()">
-                        <label for="modeCountup25">ĐẾM 25'</label>
-                    </div>
-                    <div class="mode-option">
+                        <span>ĐẾM 25'</span>
+                    </label>
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="countup30" id="modeCountup30" onchange="changeMode()">
-                        <label for="modeCountup30">ĐẾM 30'</label>
-                    </div>
+                        <span>ĐẾM 30'</span>
+                    </label>
                     
-                    <div class="mode-option">
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="countup35" id="modeCountup35" onchange="changeMode()">
-                        <label for="modeCountup35">ĐẾM 35'</label>
-                    </div>
-                    <div class="mode-option">
+                        <span>ĐẾM 35'</span>
+                    </label>
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="off" id="modeOff" onchange="changeMode()">
-                        <label for="modeOff">TẮT</label>
-                    </div>
-                    <div class="mode-option">
+                        <span>TẮT</span>
+                    </label>
+                    <label class="mode-option">
                         <input type="radio" name="mode" value="penalty" id="modePenalty" onchange="changeMode()">
-                        <label for="modePenalty">PENALTY</label>
-                    </div>
+                        <span>PENALTY</span>
+                    </label>
                 </div>
             </div>
             
