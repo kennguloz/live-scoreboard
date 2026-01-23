@@ -167,16 +167,36 @@
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
+            border: 3px solid transparent;
         }
         
         .skin-option:hover {
             background: #e9ecef;
+            border-color: #007bff;
+            transform: translateX(5px);
         }
         
         .skin-option input[type="radio"] {
             margin-right: 15px;
             width: 20px;
             height: 20px;
+            cursor: pointer;
+        }
+        
+        .skin-option input[type="radio"]:checked + span {
+            color: #007bff;
+            font-weight: bold;
+        }
+        
+        .skin-option:has(input[type="radio"]:checked) {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-color: #007bff;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.2);
+        }
+        
+        .skin-option span {
+            font-size: 16px;
+            transition: all 0.3s;
         }
         
         .skin-preview {
@@ -279,22 +299,26 @@
 
         <!-- Tab: Thông Tin Trận Đấu -->
         <div id="infoTab" class="tab-content active">
-            <div class="info-section">
-                <h3>⚽ Đội 1</h3>
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
-                <input type="text" id="team1Info" placeholder="Nhập tên đội 1" value="ĐỘI A">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                <div class="info-section">
+                    <h3>⚽ Đội 1</h3>
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
+                    <input type="text" id="team1Info" placeholder="Nhập tên đội 1" value="ĐỘI A">
+                    
+                    <label style="display: block; margin: 15px 0 8px 0; font-weight: bold;">Logo:</label>
+                    <input type="file" id="logoFile1" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
+                    <div id="logoPreview1" style="margin-top: 10px; text-align: center;"></div>
+                </div>
                 
-                <label style="display: block; margin: 15px 0 8px 0; font-weight: bold;">Logo (URL):</label>
-                <input type="text" id="logo1" placeholder="https://example.com/logo1.png">
-            </div>
-            
-            <div class="info-section">
-                <h3>⚽ Đội 2</h3>
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
-                <input type="text" id="team2Info" placeholder="Nhập tên đội 2" value="ĐỘI B">
-                
-                <label style="display: block; margin: 15px 0 8px 0; font-weight: bold;">Logo (URL):</label>
-                <input type="text" id="logo2" placeholder="https://example.com/logo2.png">
+                <div class="info-section">
+                    <h3>⚽ Đội 2</h3>
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
+                    <input type="text" id="team2Info" placeholder="Nhập tên đội 2" value="ĐỘI B">
+                    
+                    <label style="display: block; margin: 15px 0 8px 0; font-weight: bold;">Logo:</label>
+                    <input type="file" id="logoFile2" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
+                    <div id="logoPreview2" style="margin-top: 10px; text-align: center;"></div>
+                </div>
             </div>
             
             <div class="info-section">
@@ -386,28 +410,30 @@
 
         <!-- Tab: Skins -->
         <div id="skinsTab" class="tab-content">
-            <h3 style="margin-bottom: 15px;">Chọn Giao Diện:</h3>
-            <div class="skin-selector">
-                <label class="skin-option">
-                    <input type="radio" name="skin" value="1" checked onchange="changeSkin()">
-                    <span>SKIN 1 - Vàng Xanh Navy</span>
-                </label>
-                <label class="skin-option">
-                    <input type="radio" name="skin" value="2" onchange="changeSkin()">
-                    <span>SKIN 2 - Đỏ Xanh Dương</span>
-                </label>
-                <label class="skin-option">
-                    <input type="radio" name="skin" value="3" onchange="changeSkin()">
-                    <span>SKIN 3 - Xanh Lá</span>
-                </label>
-                <label class="skin-option">
-                    <input type="radio" name="skin" value="4" onchange="changeSkin()">
-                    <span>SKIN 4 - Cam Navy</span>
-                </label>
-                <label class="skin-option">
-                    <input type="radio" name="skin" value="5" onchange="changeSkin()">
-                    <span>SKIN 5 - Đang Phát Triển</span>
-                </label>
+            <div class="info-section">
+                <h3>🎨 Chọn Giao Diện</h3>
+                <div class="skin-selector">
+                    <label class="skin-option">
+                        <input type="radio" name="skin" value="1" checked onchange="changeSkin()">
+                        <span>SKIN 1 - Vàng Xanh Navy</span>
+                    </label>
+                    <label class="skin-option">
+                        <input type="radio" name="skin" value="2" onchange="changeSkin()">
+                        <span>SKIN 2 - Đỏ Xanh Dương</span>
+                    </label>
+                    <label class="skin-option">
+                        <input type="radio" name="skin" value="3" onchange="changeSkin()">
+                        <span>SKIN 3 - Xanh Lá</span>
+                    </label>
+                    <label class="skin-option">
+                        <input type="radio" name="skin" value="4" onchange="changeSkin()">
+                        <span>SKIN 4 - Cam Navy</span>
+                    </label>
+                    <label class="skin-option">
+                        <input type="radio" name="skin" value="5" onchange="changeSkin()">
+                        <span>SKIN 5 - Đang Phát Triển</span>
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -471,8 +497,17 @@
             document.getElementById('team2').value = currentData.team2;
             document.getElementById('team1Info').value = currentData.team1;
             document.getElementById('team2Info').value = currentData.team2;
-            if (currentData.logo1) document.getElementById('logo1').value = currentData.logo1;
-            if (currentData.logo2) document.getElementById('logo2').value = currentData.logo2;
+            
+            // Hiển thị logo preview nếu có
+            if (currentData.logo1) {
+                document.getElementById('logoPreview1').innerHTML = 
+                    '<img src="' + currentData.logo1 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
+            }
+            if (currentData.logo2) {
+                document.getElementById('logoPreview2').innerHTML = 
+                    '<img src="' + currentData.logo2 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
+            }
+            
             document.getElementById('previewTeam1').textContent = currentData.team1;
             document.getElementById('previewTeam2').textContent = currentData.team2;
             document.getElementById('previewScore1').textContent = currentData.score1;
@@ -565,8 +600,6 @@
         window.saveMatchInfo = function() {
             currentData.team1 = document.getElementById('team1Info').value;
             currentData.team2 = document.getElementById('team2Info').value;
-            currentData.logo1 = document.getElementById('logo1').value;
-            currentData.logo2 = document.getElementById('logo2').value;
             
             const mode = document.querySelector('input[name="textMode"]:checked').value;
             const content = document.getElementById('runningTextContent').value;
@@ -579,6 +612,37 @@
             
             saveToFirebase();
         };
+        
+        // Xử lý upload logo
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('logoFile1').addEventListener('change', function(e) {
+                handleLogoUpload(e, 1);
+            });
+            document.getElementById('logoFile2').addEventListener('change', function(e) {
+                handleLogoUpload(e, 2);
+            });
+        });
+        
+        function handleLogoUpload(event, team) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64 = e.target.result;
+                    if (team === 1) {
+                        currentData.logo1 = base64;
+                        document.getElementById('logoPreview1').innerHTML = 
+                            '<img src="' + base64 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
+                    } else {
+                        currentData.logo2 = base64;
+                        document.getElementById('logoPreview2').innerHTML = 
+                            '<img src="' + base64 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
+                    }
+                    saveToFirebase();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
         window.updateAll = function() {
             currentData.team1 = document.getElementById('team1').value;
