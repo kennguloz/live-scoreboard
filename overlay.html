@@ -17,6 +17,12 @@
             overflow: hidden;
         }
         
+        /* ĐIỀU CHỈNH KÍCH THƯỚC TẤT CẢ SKIN Ở ĐÂY */
+        .skin1, .skin2, .skin3, .skin4, .skin5 {
+            transform: scale(0.65);
+            transform-origin: top right;
+        }
+        
         .hidden {
             display: none !important;
         }
@@ -477,23 +483,21 @@
         });
 
         function updateDisplay(data) {
-            // Chỉ ẩn khi mode = 'off' hoặc visible = false
-            if (data.mode === 'off' || data.visible === false) {
+            // Ẩn tất cả khi mode = 'off'
+            if (data.mode === 'off') {
                 document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
                 return;
             }
             
-            // Hiện lại khi không phải mode 'off'
-            if (data.mode !== 'off') {
-                // Chuyển skin
-                if (data.skin && data.skin !== currentSkin) {
-                    document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
-                    document.getElementById('skin' + data.skin).classList.remove('hidden');
-                    currentSkin = data.skin;
-                } else {
-                    // Đảm bảo skin hiện tại được hiển thị
-                    document.getElementById('skin' + currentSkin).classList.remove('hidden');
-                }
+            // Hiện lại khi chọn mode khác
+            // Chuyển skin nếu cần
+            if (data.skin && data.skin !== currentSkin) {
+                document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
+                document.getElementById('skin' + data.skin).classList.remove('hidden');
+                currentSkin = data.skin;
+            } else {
+                // Đảm bảo skin hiện tại được hiển thị (quan trọng khi chuyển từ 'off' sang mode khác)
+                document.getElementById('skin' + currentSkin).classList.remove('hidden');
             }
 
             // Cập nhật dữ liệu cho tất cả skin
