@@ -287,8 +287,8 @@
                 </div>
                 
                 <div class="mode-option">
-                    <input type="radio" name="mode" value="countdown20" id="modeCountdown20" onchange="changeMode()">
-                    <label for="modeCountdown20">ĐẾM 20'</label>
+                    <input type="radio" name="mode" value="countup20" id="modeCountup20" onchange="changeMode()">
+                    <label for="modeCountup20">ĐẾM 20'</label>
                 </div>
                 <div class="mode-option">
                     <input type="radio" name="mode" value="countup25" id="modeCountup25" onchange="changeMode()">
@@ -300,8 +300,8 @@
                 </div>
                 
                 <div class="mode-option">
-                    <input type="radio" name="mode" value="countdown35" id="modeCountdown35" onchange="changeMode()">
-                    <label for="modeCountdown35">ĐẾM 35'</label>
+                    <input type="radio" name="mode" value="countup35" id="modeCountup35" onchange="changeMode()">
+                    <label for="modeCountup35">ĐẾM 35'</label>
                 </div>
                 <div class="mode-option">
                     <input type="radio" name="mode" value="off" id="modeOff" onchange="changeMode()">
@@ -378,6 +378,8 @@
             skin: '1',
             visible: true
         };
+        
+        let timerInterval = null; // Lưu interval để có thể clear
 
 
         // Listen to Firebase changes
@@ -420,27 +422,31 @@
         };
 
         window.changeMode = function() {
+            // Dừng timer cũ trước
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
             const selectedMode = document.querySelector('input[name="mode"]:checked').value;
             currentData.mode = selectedMode;
             currentData.visible = selectedMode !== 'off';
             
-            // Đếm ngược: 20', 35'
-            if (selectedMode === 'countdown20') {
-                currentData.time = '20:00';
-                startCountdown(20);
-            } else if (selectedMode === 'countdown35') {
-                currentData.time = '35:00';
-                startCountdown(35);
-            }
-            // Đếm lên: 0', 25', 30'
-            else if (selectedMode === 'countup0') {
+            // Đếm lên từ thời gian chỉ định
+            if (selectedMode === 'countup0') {
                 currentData.time = '00:00';
+                startCountup();
+            } else if (selectedMode === 'countup20') {
+                currentData.time = '20:00';
                 startCountup();
             } else if (selectedMode === 'countup25') {
                 currentData.time = '25:00';
                 startCountup();
             } else if (selectedMode === 'countup30') {
                 currentData.time = '30:00';
+                startCountup();
+            } else if (selectedMode === 'countup35') {
+                currentData.time = '35:00';
                 startCountup();
             }
             
@@ -475,9 +481,10 @@
         function startCountdown(minutes) {
             let totalSeconds = minutes * 60;
             
-            const interval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 if (totalSeconds <= 0 || !currentData.mode.startsWith('countdown')) {
-                    clearInterval(interval);
+                    clearInterval(timerInterval);
+                    timerInterval = null;
                     return;
                 }
                 
@@ -493,9 +500,10 @@
             const startTime = currentData.time.split(':');
             let totalSeconds = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
             
-            const interval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 if (!currentData.mode.startsWith('countup')) {
-                    clearInterval(interval);
+                    clearInterval(timerInterval);
+                    timerInterval = null;
                     return;
                 }
                 
