@@ -261,10 +261,43 @@
         
         .info-section h3 {
             margin: 0 0 15px 0;
-            color: #333;
+            color: white;
             font-size: 18px;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 8px;
+            padding: 12px 15px;
+            border-radius: 8px 8px 0 0;
+            margin: -20px -20px 15px -20px;
+        }
+        
+        .info-section.team-section h3 {
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+        }
+        
+        .info-section.poster-section h3 {
+            background: linear-gradient(135deg, #ff6f00 0%, #e65100 100%);
+        }
+        
+        .info-section.text-section h3 {
+            background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
+        }
+        
+        .info-section.skin-section h3 {
+            background: linear-gradient(135deg, #8e24aa 0%, #6a1b9a 100%);
+        }
+        
+        .info-section.team-section {
+            border: 2px solid #1e88e5;
+        }
+        
+        .info-section.poster-section {
+            border: 2px solid #ff6f00;
+        }
+        
+        .info-section.text-section {
+            border: 2px solid #43a047;
+        }
+        
+        .info-section.skin-section {
+            border: 2px solid #8e24aa;
         }
         
         .poster-grid {
@@ -363,27 +396,13 @@
             <button class="tab-btn active" onclick="switchTab('info')">THÔNG TIN TRẬN ĐẤU</button>
             <button class="tab-btn" onclick="switchTab('control')">QUẢN LÝ TRẬN ĐẤU</button>
         </div>
-        
-        <!-- Preview Box -->
-        <div class="preview-box">
-            <div style="display: flex; align-items: center; justify-content: space-between; max-width: 700px; margin: 0 auto;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                    <div class="preview-score" id="previewScore1" style="background: #ffc107; color: #000; padding: 10px 25px; border-radius: 5px;">0</div>
-                    <div id="previewTeam1" style="font-size: 16px;">ĐỘI A</div>
-                </div>
-                <div id="previewTime" style="font-size: 32px;">00:00</div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                    <div class="preview-score" id="previewScore2" style="background: #ffc107; color: #000; padding: 10px 25px; border-radius: 5px;">0</div>
-                    <div id="previewTeam2" style="font-size: 16px;">ĐỘI B</div>
-                </div>
-            </div>
-            <div style="margin-top: 15px; font-size: 18px; color: #ccc;" id="previewMode">POSTER</div>
-        </div>
 
         <!-- Tab: Thông Tin Trận Đấu -->
         <div id="infoTab" class="tab-content active">
+            <h2 style="text-align: center; color: #1e88e5; margin-bottom: 20px; font-size: 24px;">📋 THÔNG TIN ĐỘI BÓNG</h2>
+            
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                <div class="info-section">
+                <div class="info-section team-section">
                     <h3>⚽ Đội 1</h3>
                     <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
                     <input type="text" id="team1Info" placeholder="Nhập tên đội 1" value="ĐỘI A">
@@ -393,7 +412,7 @@
                     <div id="logoPreview1" style="margin-top: 10px; text-align: center;"></div>
                 </div>
                 
-                <div class="info-section">
+                <div class="info-section team-section">
                     <h3>⚽ Đội 2</h3>
                     <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
                     <input type="text" id="team2Info" placeholder="Nhập tên đội 2" value="ĐỘI B">
@@ -404,7 +423,7 @@
                 </div>
             </div>
             
-            <div class="info-section">
+            <div class="info-section poster-section">
                 <h3>🎨 Chọn Mẫu Poster & Cài Đặt Logo</h3>
                 <div class="poster-grid">
                     <div class="poster-option active" onclick="selectPoster('tretrung')">
@@ -467,7 +486,7 @@
             </div>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                <div class="info-section">
+                <div class="info-section text-section">
                     <h3>📢 Chữ Chạy</h3>
                     <div style="display: flex; gap: 15px; margin-bottom: 15px;">
                         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
@@ -489,7 +508,7 @@
                               style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;"></textarea>
                 </div>
                 
-                <div class="info-section">
+                <div class="info-section skin-section">
                     <h3>🎨 Chọn Giao Diện</h3>
                     <div class="skin-selector">
                         <label class="skin-option">
@@ -521,8 +540,30 @@
 
         <!-- Tab: Quản Lý Trận Đấu -->
         <div id="controlTab" class="tab-content">
-            <div class="info-section">
-                <h3>⏱️ Chế Độ Hiển Thị</h3>
+            <div class="info-section" style="border: 2px solid #ff6f00;">
+                <h3 style="background: linear-gradient(135deg, #ff6f00 0%, #e65100 100%); color: white; padding: 12px 15px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px;">⚽ Điều Khiển Tỉ Số</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold; text-align: center;">Tên Đội 1:</label>
+                        <input type="text" id="team1" placeholder="Tên Đội 1" value="ĐỘI A" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; text-align: center; font-weight: bold;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold; text-align: center;">Tên Đội 2:</label>
+                        <input type="text" id="team2" placeholder="Tên Đội 2" value="ĐỘI B" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; text-align: center; font-weight: bold;">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <button class="btn btn-increase" onclick="changeScore(1, 1)">TĂNG ĐỘI 1</button>
+                    <button class="btn btn-increase" onclick="changeScore(2, 1)">TĂNG ĐỘI 2</button>
+                    <button class="btn btn-decrease" onclick="changeScore(1, -1)">GIẢM ĐỘI 1</button>
+                    <button class="btn btn-decrease" onclick="changeScore(2, -1)">GIẢM ĐỘI 2</button>
+                </div>
+            </div>
+            
+            <div class="info-section" style="border: 2px solid #1e88e5;">
+                <h3 style="background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%); color: white; padding: 12px 15px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px;">⏱️ Chế Độ Hiển Thị</h3>
                 <div class="mode-grid">
                     <label class="mode-option">
                         <input type="radio" name="mode" value="poster" id="modePoster" onchange="changeMode()">
@@ -637,10 +678,15 @@
         });
 
         function updateUI() {
-            document.getElementById('team1').value = currentData.team1;
-            document.getElementById('team2').value = currentData.team2;
-            document.getElementById('team1Info').value = currentData.team1;
-            document.getElementById('team2Info').value = currentData.team2;
+            // Update team names
+            if (currentData.team1) {
+                document.getElementById('team1').value = currentData.team1;
+                document.getElementById('team1Info').value = currentData.team1;
+            }
+            if (currentData.team2) {
+                document.getElementById('team2').value = currentData.team2;
+                document.getElementById('team2Info').value = currentData.team2;
+            }
             
             // Hiển thị logo preview nếu có
             if (currentData.logo1) {
@@ -651,12 +697,6 @@
                 document.getElementById('logoPreview2').innerHTML = 
                     '<img src="' + currentData.logo2 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
             }
-            
-            document.getElementById('previewTeam1').textContent = currentData.team1;
-            document.getElementById('previewTeam2').textContent = currentData.team2;
-            document.getElementById('previewScore1').textContent = currentData.score1;
-            document.getElementById('previewScore2').textContent = currentData.score2;
-            document.getElementById('previewTime').textContent = currentData.time;
             
             // Update mode radio
             if (currentData.mode) {
