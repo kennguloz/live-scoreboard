@@ -477,17 +477,23 @@
         });
 
         function updateDisplay(data) {
-            // Kiểm tra visible
-            if (data.visible === false || data.mode === 'off') {
+            // Chỉ ẩn khi mode = 'off' hoặc visible = false
+            if (data.mode === 'off' || data.visible === false) {
                 document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
                 return;
             }
-
-            // Chuyển skin
-            if (data.skin && data.skin !== currentSkin) {
-                document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
-                document.getElementById('skin' + data.skin).classList.remove('hidden');
-                currentSkin = data.skin;
+            
+            // Hiện lại khi không phải mode 'off'
+            if (data.mode !== 'off') {
+                // Chuyển skin
+                if (data.skin && data.skin !== currentSkin) {
+                    document.querySelectorAll('[id^="skin"]').forEach(el => el.classList.add('hidden'));
+                    document.getElementById('skin' + data.skin).classList.remove('hidden');
+                    currentSkin = data.skin;
+                } else {
+                    // Đảm bảo skin hiện tại được hiển thị
+                    document.getElementById('skin' + currentSkin).classList.remove('hidden');
+                }
             }
 
             // Cập nhật dữ liệu cho tất cả skin
