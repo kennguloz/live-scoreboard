@@ -24,8 +24,8 @@
             transform-origin: top right;
             
             /* Vị trí: top (từ trên), right (từ phải) */
-            top: 20px;
-            right: 20px;
+            top: 25px;
+            right: 30px;
         }
         /* ========================================= */
         
@@ -530,23 +530,8 @@
             const newScore1 = data.score1 || 0;
             const newScore2 = data.score2 || 0;
             
-            if (newScore1 > previousScore1 || newScore2 > previousScore2) {
-                showGoalAnimation();
-            }
-            
             previousScore1 = newScore1;
             previousScore2 = newScore2;
-        }
-
-        function showGoalAnimation() {
-            const goalDiv = document.createElement('div');
-            goalDiv.className = 'goal-animation';
-            goalDiv.textContent = 'GOOOAL! ⚽';
-            document.body.appendChild(goalDiv);
-            
-            setTimeout(() => {
-                goalDiv.remove();
-            }, 1000);
         }
     </script>
 </body>
