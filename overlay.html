@@ -369,6 +369,37 @@
                 transform: translate(-50%, -50%) scale(1.3);
             }
         }
+        
+        /* CHỮ CHẠY */
+        .running-text {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 12px 0;
+            font-size: 22px;
+            font-weight: bold;
+            overflow: hidden;
+            z-index: 9999;
+        }
+        
+        .running-text-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-left 20s linear infinite;
+            padding-left: 100%;
+        }
+        
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
     </style>
 </head>
 <body>
@@ -446,6 +477,11 @@
     <!-- SKIN 5 -->
     <div class="skin5 hidden" id="skin5">
         <h1>ĐANG PHÁT TRIỂN</h1>
+    </div>
+    
+    <!-- CHỮ CHẠY -->
+    <div class="running-text hidden" id="runningText">
+        <div class="running-text-content" id="runningTextContent"></div>
     </div>
 
 
@@ -532,6 +568,41 @@
             
             previousScore1 = newScore1;
             previousScore2 = newScore2;
+            
+            // Cập nhật chữ chạy
+            updateRunningText(data);
+        }
+        
+        let textInterval = null;
+        
+        function updateRunningText(data) {
+            const runningTextDiv = document.getElementById('runningText');
+            const runningTextContent = document.getElementById('runningTextContent');
+            
+            if (!data.runningText || !data.runningText.enabled || data.runningText.mode === 'none') {
+                runningTextDiv.classList.add('hidden');
+                if (textInterval) {
+                    clearInterval(textInterval);
+                    textInterval = null;
+                }
+                return;
+            }
+            
+            // Hiển thị chữ chạy
+            runningTextContent.textContent = data.runningText.content || '';
+            
+            if (data.runningText.mode === 'continuous') {
+                // Liên tục
+                runningTextDiv.classList.remove('hidden');
+            } else if (data.runningText.mode === 'every2min') {
+                // Mỗi 2 phút
+                if (!textInterval) {
+                    runningTextDiv.classList.remove('hidden');
+                    textInterval = setInterval(() => {
+                        runningTextDiv.classList.toggle('hidden');
+                    }, 120000); // 2 phút = 120000ms
+                }
+            }
         }
     </script>
 </body>
