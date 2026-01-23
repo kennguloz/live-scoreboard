@@ -107,10 +107,14 @@
         }
         
         .tab-btn:nth-child(1).active {
-            background: #ff8c00;
+            background: #28a745;
         }
         
         .tab-btn:nth-child(2).active {
+            background: #ff8c00;
+        }
+        
+        .tab-btn:nth-child(3).active {
             background: #9c27b0;
         }
         
@@ -197,6 +201,22 @@
             font-size: 14px;
         }
         
+        .info-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .info-section h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 18px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 8px;
+        }
+        
         .status {
             text-align: center;
             padding: 10px;
@@ -219,6 +239,13 @@
 <body>
     <div class="container">
         <h1 style="text-align: center; margin-bottom: 20px; color: #333;">⚽ ĐIỀU KHIỂN TRẬN ĐẤU</h1>
+        
+        <!-- Control Tabs -->
+        <div class="control-tabs">
+            <button class="tab-btn active" onclick="switchTab('info')">THÔNG TIN TRẬN ĐẤU</button>
+            <button class="tab-btn" onclick="switchTab('control')">QUẢN LÝ TRẬN ĐẤU</button>
+            <button class="tab-btn" onclick="switchTab('skins')">CHỌN SKIN</button>
+        </div>
         
         <!-- Preview Box -->
         <div class="preview-box">
@@ -250,91 +277,111 @@
             <button class="btn btn-decrease" onclick="changeScore(2, -1)">GIẢM ĐỘI 2</button>
         </div>
 
-        <!-- Control Tabs -->
-        <div class="control-tabs">
-            <button class="tab-btn active" onclick="switchTab('modes')">ĐIỀU KHIỂN</button>
-            <button class="tab-btn" onclick="switchTab('skins')">CHỌN SKIN</button>
+        <!-- Tab: Thông Tin Trận Đấu -->
+        <div id="infoTab" class="tab-content active">
+            <div class="info-section">
+                <h3>⚽ Đội 1</h3>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
+                <input type="text" id="team1Info" placeholder="Nhập tên đội 1" value="ĐỘI A">
+                
+                <label style="display: block; margin: 15px 0 8px 0; font-weight: bold;">Logo (URL):</label>
+                <input type="text" id="logo1" placeholder="https://example.com/logo1.png">
+            </div>
+            
+            <div class="info-section">
+                <h3>⚽ Đội 2</h3>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
+                <input type="text" id="team2Info" placeholder="Nhập tên đội 2" value="ĐỘI B">
+                
+                <label style="display: block; margin: 15px 0 8px 0; font-weight: bold;">Logo (URL):</label>
+                <input type="text" id="logo2" placeholder="https://example.com/logo2.png">
+            </div>
+            
+            <div class="info-section">
+                <h3>📢 Chữ Chạy</h3>
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="radio" name="textMode" value="none" checked onchange="updateRunningText()">
+                        <span>KHÔNG</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="radio" name="textMode" value="continuous" onchange="updateRunningText()">
+                        <span>LIÊN TỤC</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="radio" name="textMode" value="every2min" onchange="updateRunningText()">
+                        <span>MỖI 2'</span>
+                    </label>
+                </div>
+                <textarea id="runningTextContent" 
+                          placeholder="Nhập nội dung chữ chạy..."
+                          rows="4"
+                          style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;"></textarea>
+            </div>
+            
+            <button class="btn" style="width: 100%; background: #28a745; color: white;" onclick="saveMatchInfo()">💾 LƯU THÔNG TIN</button>
         </div>
 
-        <!-- Tab: Modes -->
-        <div id="modesTab" class="tab-content active">
-            <h3 style="margin-bottom: 15px;">Chế Độ Hiển Thị:</h3>
-            <div class="mode-grid">
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="poster" id="modePoster" onchange="changeMode()">
-                    <label for="modePoster">POSTER</label>
-                </div>
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="intro" id="modeIntro" onchange="changeMode()">
-                    <label for="modeIntro">GIỚI THIỆU</label>
-                </div>
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="lineup" id="modeLineup" onchange="changeMode()">
-                    <label for="modeLineup">DANH SÁCH</label>
-                </div>
-                
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="score" id="modeScore" checked onchange="changeMode()">
-                    <label for="modeScore">TỈ SỐ DƯỚI</label>
-                </div>
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="countup0" id="modeCountup0" onchange="changeMode()">
-                    <label for="modeCountup0">ĐẾM 0'</label>
-                </div>
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="halftime" id="modeHalftime" onchange="changeMode()">
-                    <label for="modeHalftime">NGHỈ HIỆP</label>
-                </div>
-                
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="countup20" id="modeCountup20" onchange="changeMode()">
-                    <label for="modeCountup20">ĐẾM 20'</label>
-                </div>
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="countup25" id="modeCountup25" onchange="changeMode()">
-                    <label for="modeCountup25">ĐẾM 25'</label>
-                </div>
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="countup30" id="modeCountup30" onchange="changeMode()">
-                    <label for="modeCountup30">ĐẾM 30'</label>
-                </div>
-                
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="countup35" id="modeCountup35" onchange="changeMode()">
-                    <label for="modeCountup35">ĐẾM 35'</label>
-                </div>
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="off" id="modeOff" onchange="changeMode()">
-                    <label for="modeOff">TẮT</label>
-                </div>
-                <div class="mode-option">
-                    <input type="radio" name="mode" value="penalty" id="modePenalty" onchange="changeMode()">
-                    <label for="modePenalty">PENALTY</label>
+        <!-- Tab: Quản Lý Trận Đấu -->
+        <div id="controlTab" class="tab-content">
+            <div class="info-section">
+                <h3>⏱️ Chế Độ Hiển Thị</h3>
+                <div class="mode-grid">
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="poster" id="modePoster" onchange="changeMode()">
+                        <label for="modePoster">POSTER</label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="intro" id="modeIntro" onchange="changeMode()">
+                        <label for="modeIntro">GIỚI THIỆU</label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="lineup" id="modeLineup" onchange="changeMode()">
+                        <label for="modeLineup">DANH SÁCH</label>
+                    </div>
+                    
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="score" id="modeScore" checked onchange="changeMode()">
+                        <label for="modeScore">TỈ SỐ DƯỚI</label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="countup0" id="modeCountup0" onchange="changeMode()">
+                        <label for="modeCountup0">ĐẾM 0'</label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="halftime" id="modeHalftime" onchange="changeMode()">
+                        <label for="modeHalftime">NGHỈ HIỆP</label>
+                    </div>
+                    
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="countup20" id="modeCountup20" onchange="changeMode()">
+                        <label for="modeCountup20">ĐẾM 20'</label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="countup25" id="modeCountup25" onchange="changeMode()">
+                        <label for="modeCountup25">ĐẾM 25'</label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="countup30" id="modeCountup30" onchange="changeMode()">
+                        <label for="modeCountup30">ĐẾM 30'</label>
+                    </div>
+                    
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="countup35" id="modeCountup35" onchange="changeMode()">
+                        <label for="modeCountup35">ĐẾM 35'</label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="off" id="modeOff" onchange="changeMode()">
+                        <label for="modeOff">TẮT</label>
+                    </div>
+                    <div class="mode-option">
+                        <input type="radio" name="mode" value="penalty" id="modePenalty" onchange="changeMode()">
+                        <label for="modePenalty">PENALTY</label>
+                    </div>
                 </div>
             </div>
             
-            <button class="btn" style="width: 100%; background: #007bff; color: white;" onclick="updateAll()">CẬP NHẬT TẤT CẢ</button>
-            
-            <h3 style="margin: 20px 0 15px 0;">Cài Đặt Chữ Chạy:</h3>
-            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                    <input type="radio" name="textMode" value="none" checked onchange="updateRunningText()">
-                    <span>KHÔNG</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                    <input type="radio" name="textMode" value="continuous" onchange="updateRunningText()">
-                    <span>LIÊN TỤC</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                    <input type="radio" name="textMode" value="every2min" onchange="updateRunningText()">
-                    <span>MỖI 2'</span>
-                </label>
-            </div>
-            <textarea id="runningTextContent" 
-                      placeholder="Nhập nội dung chữ chạy..."
-                      rows="4"
-                      style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; margin-bottom: 15px;"></textarea>
-            <button class="btn" style="width: 100%; background: #28a745; color: white;" onclick="applyRunningText()">ÁP DỤNG CHỮ CHẠY</button>
+            <button class="btn" style="width: 100%; background: #007bff; color: white;" onclick="updateAll()">🔄 CẬP NHẬT</button>
         </div>
 
         <!-- Tab: Skins -->
@@ -422,6 +469,10 @@
         function updateUI() {
             document.getElementById('team1').value = currentData.team1;
             document.getElementById('team2').value = currentData.team2;
+            document.getElementById('team1Info').value = currentData.team1;
+            document.getElementById('team2Info').value = currentData.team2;
+            if (currentData.logo1) document.getElementById('logo1').value = currentData.logo1;
+            if (currentData.logo2) document.getElementById('logo2').value = currentData.logo2;
             document.getElementById('previewTeam1').textContent = currentData.team1;
             document.getElementById('previewTeam2').textContent = currentData.team2;
             document.getElementById('previewScore1').textContent = currentData.score1;
@@ -511,6 +562,24 @@
             saveToFirebase();
         };
 
+        window.saveMatchInfo = function() {
+            currentData.team1 = document.getElementById('team1Info').value;
+            currentData.team2 = document.getElementById('team2Info').value;
+            currentData.logo1 = document.getElementById('logo1').value;
+            currentData.logo2 = document.getElementById('logo2').value;
+            
+            const mode = document.querySelector('input[name="textMode"]:checked').value;
+            const content = document.getElementById('runningTextContent').value;
+            
+            currentData.runningText = {
+                enabled: mode !== 'none',
+                mode: mode,
+                content: content
+            };
+            
+            saveToFirebase();
+        };
+
         window.updateAll = function() {
             currentData.team1 = document.getElementById('team1').value;
             currentData.team2 = document.getElementById('team2').value;
@@ -521,11 +590,14 @@
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            if (tab === 'modes') {
+            if (tab === 'info') {
                 document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-                document.getElementById('modesTab').classList.add('active');
-            } else if (tab === 'skins') {
+                document.getElementById('infoTab').classList.add('active');
+            } else if (tab === 'control') {
                 document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+                document.getElementById('controlTab').classList.add('active');
+            } else if (tab === 'skins') {
+                document.querySelector('.tab-btn:nth-child(3)').classList.add('active');
                 document.getElementById('skinsTab').classList.add('active');
             }
         };
