@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Điều Khiển Trận Đấu</title>
+    <title>Bảng Tỉ Số - Overlay</title>
     <style>
         * {
             margin: 0;
@@ -12,625 +12,148 @@
         }
         
         body {
-            background: #f5f5f5;
+            background: transparent;
             font-family: Arial, sans-serif;
-            padding: 20px;
+            overflow: hidden;
         }
         
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .hidden {
+            display: none !important;
         }
         
-        .preview-box {
-            background: #2c3e50;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 20px;
+        /* SKIN 2 - Đỏ Xanh Dương - Theo mẫu mới */
+        .scoreboard {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            display: flex;
+            align-items: stretch;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: slideIn 0.5s ease forwards;
+            height: 80px;
+            transform: scale(0.55);
+            transform-origin: top right;
+            border-radius: 0;
+        }
+        
+        .team-box {
+            padding: 0 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            min-width: 350px;
+            position: relative;
+        }
+        
+        .team-box.left {
+            background: #ff0000;
+            flex-direction: row;
+        }
+        
+        .team-box.right {
+            background: #1e88e5;
+            flex-direction: row-reverse;
+        }
+        
+        .team-name {
             color: white;
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        .preview-content {
+        .score {
+            color: white;
+            font-size: 56px;
+            font-weight: 900;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .time-box {
+            background: #cc0000;
+            padding: 0 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 30px;
+            min-width: 120px;
         }
         
-        .preview-score {
-            font-size: 48px;
-        }
-        
-        .score-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .btn {
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-increase {
-            background: #28a745;
+        .time {
             color: white;
+            font-size: 32px;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        .btn-increase:hover {
-            background: #218838;
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+            }
         }
         
-        .btn-decrease {
-            background: #dc3545;
-            color: white;
-        }
-        
-        .btn-decrease:hover {
-            background: #c82333;
-        }
-        
-        .control-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            background: #e9ecef;
+        /* CHỮ CHẠY */
+        .running-text {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(200, 200, 200, 0.9);
             color: #333;
-        }
-        
-        .tab-btn.active {
-            background: #007bff;
-            color: white;
-        }
-        
-        .tab-btn:nth-child(1).active {
-            background: #28a745;
-        }
-        
-        .tab-btn:nth-child(2).active {
-            background: #ff8c00;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .mode-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .mode-option {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid #e0e0e0;
-            transition: all 0.3s;
-        }
-        
-        .mode-option:hover {
-            background: #e9ecef;
-            border-color: #007bff;
-            transform: scale(1.02);
-        }
-        
-        .mode-option:has(input[type="radio"]:checked) {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            border-color: #007bff;
-            box-shadow: 0 3px 8px rgba(0,123,255,0.3);
-        }
-        
-        .mode-option input[type="radio"] {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-        
-        .mode-option label {
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .mode-option:has(input[type="radio"]:checked) label {
-            color: #007bff;
+            padding: 12px 0;
+            font-size: 22px;
             font-weight: bold;
+            overflow: hidden;
+            z-index: 9999;
         }
         
-        .mode-option span {
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
+        .running-text-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-left 20s linear infinite;
+            padding-left: 100%;
         }
         
-        .mode-option:has(input[type="radio"]:checked) span {
-            color: #007bff;
-            font-weight: bold;
-        }
-        
-        .skin-option {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 3px solid transparent;
-        }
-        
-        .skin-option:hover {
-            background: #e9ecef;
-            border-color: #007bff;
-            transform: translateX(5px);
-        }
-        
-        .skin-option input[type="radio"] {
-            margin-right: 15px;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        
-        .skin-option input[type="radio"]:checked + div span {
-            color: #007bff;
-            font-weight: bold;
-        }
-        
-        .skin-option:has(input[type="radio"]:checked) {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            border-color: #007bff;
-            box-shadow: 0 4px 12px rgba(0,123,255,0.2);
-        }
-        
-        .skin-option span {
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .skin-option div {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            width: 100%;
-        }
-        
-        .skin-preview {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            border-radius: 5px;
-        }
-        
-        .team-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-        
-        .info-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #e0e0e0;
-        }
-        
-        .info-section h3 {
-            margin: 0 0 15px 0;
-            color: white;
-            font-size: 18px;
-            padding: 12px 15px;
-            border-radius: 8px 8px 0 0;
-            margin: -20px -20px 15px -20px;
-        }
-        
-        .info-section.team-section h3 {
-            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
-        }
-        
-        .info-section.poster-section h3 {
-            background: linear-gradient(135deg, #ff6f00 0%, #e65100 100%);
-        }
-        
-        .info-section.text-section h3 {
-            background: linear-gradient(135deg, #43a047 0%, #2e7d32 100%);
-        }
-        
-        .info-section.skin-section h3 {
-            background: linear-gradient(135deg, #8e24aa 0%, #6a1b9a 100%);
-        }
-        
-        .info-section.team-section {
-            border: 2px solid #1e88e5;
-        }
-        
-        .info-section.poster-section {
-            border: 2px solid #ff6f00;
-        }
-        
-        .info-section.text-section {
-            border: 2px solid #43a047;
-        }
-        
-        .info-section.skin-section {
-            border: 2px solid #8e24aa;
-        }
-        
-        .poster-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .poster-option {
-            border: 3px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        
-        .poster-option:hover {
-            border-color: #007bff;
-            transform: scale(1.05);
-        }
-        
-        .poster-option.active {
-            border-color: #007bff;
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
-        }
-        
-        .poster-option img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 8px;
-        }
-        
-        .poster-option span {
-            display: block;
-            font-weight: bold;
-            font-size: 14px;
-            color: #333;
-        }
-        
-        .logo-position-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .logo-position-group label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-        
-        .logo-position-group label:hover {
-            background: #f0f0f0;
-        }
-        
-        .logo-position-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-        
-        .status {
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        
-        .status.connected {
-            background: #d3f9d8;
-            color: #2b8a3e;
-        }
-        
-        .status.disconnected {
-            background: #ffe3e3;
-            color: #c92a2a;
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 style="text-align: center; margin-bottom: 20px; color: #333;">⚽ ĐIỀU KHIỂN TRẬN ĐẤU</h1>
-        
-        <!-- Control Tabs -->
-        <div class="control-tabs">
-            <button class="tab-btn active" onclick="switchTab('info')">THÔNG TIN TRẬN ĐẤU</button>
-            <button class="tab-btn" onclick="switchTab('control')">QUẢN LÝ TRẬN ĐẤU</button>
-        </div>
 
-        <!-- Tab: Thông Tin Trận Đấu -->
-        <div id="infoTab" class="tab-content active">
-            <h2 style="text-align: center; color: #1e88e5; margin-bottom: 20px; font-size: 24px;">📋 THÔNG TIN ĐỘI BÓNG</h2>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                <div class="info-section team-section">
-                    <h3>⚽ Đội 1</h3>
-                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
-                    <input type="text" id="team1Info" placeholder="Nhập tên đội 1" value="ĐỘI A">
-                    
-                    <label style="display: block; margin: 15px 0 8px 0; font-weight: bold;">Logo:</label>
-                    <input type="file" id="logoFile1" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
-                    <div id="logoPreview1" style="margin-top: 10px; text-align: center;"></div>
-                </div>
-                
-                <div class="info-section team-section">
-                    <h3>⚽ Đội 2</h3>
-                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đội:</label>
-                    <input type="text" id="team2Info" placeholder="Nhập tên đội 2" value="ĐỘI B">
-                    
-                    <label style="display: block; margin: 15px 0 8px 0; font-weight: bold;">Logo:</label>
-                    <input type="file" id="logoFile2" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
-                    <div id="logoPreview2" style="margin-top: 10px; text-align: center;"></div>
-                </div>
-            </div>
-            
-            <div class="info-section poster-section">
-                <h3>🎨 Chọn Mẫu Poster & Cài Đặt Logo</h3>
-                <div class="poster-grid">
-                    <div class="poster-option active" onclick="selectPoster('tretrung')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%23ff9800' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3ETRẺ TRUNG%3C/text%3E%3C/svg%3E" alt="Trẻ Trung">
-                        <span>TRẺ TRUNG</span>
-                    </div>
-                    <div class="poster-option" onclick="selectPoster('haoquang')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%23004d40' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3EHÁO QUANG%3C/text%3E%3C/svg%3E" alt="Háo Quang">
-                        <span>HÁO QUANG</span>
-                    </div>
-                    <div class="poster-option" onclick="selectPoster('cautruc')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect fill='%231a237e' width='200' height='120'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='20' font-weight='bold'%3ECẤU TRÚC%3C/text%3E%3C/svg%3E" alt="Cấu Trúc">
-                        <span>CẤU TRÚC</span>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                        <button class="btn" style="background: #2196F3; color: white; padding: 10px;" onclick="switchLogoTab('taitro')">TÀI TRỢ</button>
-                        <button class="btn" style="background: #9C27B0; color: white; padding: 10px;" onclick="switchLogoTab('tochuc')">TỔ CHỨC</button>
-                        <button class="btn" style="background: #FF5722; color: white; padding: 10px;" onclick="switchLogoTab('truyenthong')">TRUYỀN THÔNG</button>
-                    </div>
-                    
-                    <div id="logoTabContent">
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Tên Đơn Vị:</label>
-                            <input type="text" id="logoName" placeholder="Nhập tên đơn vị" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
-                        </div>
-                        
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Logo:</label>
-                            <input type="file" id="logoFileUpload" accept="image/*" style="width: 100%; padding: 8px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;">
-                            <div id="logoPreviewUpload" style="margin-top: 10px; text-align: center;"></div>
-                        </div>
-                        
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Hiển Thị Trong Trận:</label>
-                            <div class="logo-position-group">
-                                <label>
-                                    <input type="checkbox" id="logoTop" value="top">
-                                    <span>GÓC TRÁI TRÊN</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" id="logoBottom" value="bottom">
-                                    <span>GÓC TRÁI DƯỚI</span>
-                                </label>
-                                <label>
-                                    <input type="checkbox" id="logoRight" value="right">
-                                    <span>GÓC PHẢI DƯỚI</span>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <button class="btn" style="background: #28a745; color: white; padding: 12px; font-weight: bold;" onclick="addLogo()">THÊM</button>
-                            <button class="btn" style="background: #dc3545; color: white; padding: 12px; font-weight: bold;" onclick="removeLogo()">XÓA</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="info-section text-section">
-                <h3>📢 Chữ Chạy</h3>
-                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                        <input type="radio" name="textMode" value="none" checked onchange="updateRunningText()">
-                        <span>KHÔNG</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                        <input type="radio" name="textMode" value="continuous" onchange="updateRunningText()">
-                        <span>LIÊN TỤC</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                        <input type="radio" name="textMode" value="every2min" onchange="updateRunningText()">
-                        <span>MỖI 2'</span>
-                    </label>
-                </div>
-                <textarea id="runningTextContent" 
-                          placeholder="Nhập nội dung chữ chạy..."
-                          rows="4"
-                          style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px;"></textarea>
-            </div>
-            
-            <div class="info-section skin-section">
-                <h3>🎨 Chọn Giao Diện</h3>
-                <div class="skin-selector">
-                    <label class="skin-option">
-                        <input type="radio" name="skin" value="2" checked onchange="changeSkin()">
-                        <div style="display: flex; align-items: center; gap: 15px; width: 100%;">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='70'%3E%3Crect fill='%23ff0000' width='50' height='70'/%3E%3Ctext x='10' y='25' fill='white' font-size='10' font-weight='bold'%3EĐỘ I 1%3C/text%3E%3Ctext x='35' y='50' text-anchor='middle' fill='white' font-size='22' font-weight='bold'%3E2%3C/text%3E%3Crect fill='%23cc0000' x='50' width='50' height='70'/%3E%3Ctext x='75' y='45' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3E03:40%3C/text%3E%3Crect fill='%230066ff' x='100' width='50' height='70'/%3E%3Ctext x='115' y='50' text-anchor='middle' fill='white' font-size='22' font-weight='bold'%3E3%3C/text%3E%3Ctext x='140' y='25' fill='white' font-size='10' font-weight='bold'%3EĐỘ I 2%3C/text%3E%3C/svg%3E" style="width: 150px; height: 70px; border-radius: 5px; border: 2px solid #ddd;">
-                            <span>SKIN - Đỏ Xanh Dương</span>
-                        </div>
-                    </label>
-                </div>
-            </div>
-            
-            <button class="btn" style="width: 100%; background: #2196F3; color: white; font-size: 18px; padding: 15px; font-weight: bold;" onclick="confirmMatchInfo()">XÁC NHẬN</button>
+    <!-- BẢNG TỈ SỐ -->
+    <div class="scoreboard" id="scoreboard">
+        <div class="team-box left">
+            <div class="team-name" id="team1Name">ĐỘI A</div>
+            <div class="score" id="score1">0</div>
         </div>
-
-        <!-- Tab: Quản Lý Trận Đấu -->
-        <div id="controlTab" class="tab-content">
-            <div style="background: #2c3e50; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                <div style="display: flex; align-items: center; justify-content: space-between; max-width: 700px; margin: 0 auto;">
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                        <div id="liveScore1" style="background: #ffc107; color: #000; padding: 15px 30px; border-radius: 8px; font-size: 48px; font-weight: 900; min-width: 80px; text-align: center;">0</div>
-                        <div id="liveTeam1" style="font-size: 18px; color: white; font-weight: bold;">ĐỘI A</div>
-                    </div>
-                    <div id="liveTime" style="font-size: 36px; color: white; font-weight: 900;">00:00</div>
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
-                        <div id="liveScore2" style="background: #ffc107; color: #000; padding: 15px 30px; border-radius: 8px; font-size: 48px; font-weight: 900; min-width: 80px; text-align: center;">0</div>
-                        <div id="liveTeam2" style="font-size: 18px; color: white; font-weight: bold;">ĐỘI B</div>
-                    </div>
-                </div>
-                <div style="margin-top: 15px; font-size: 18px; color: #ccc; text-align: center;" id="liveMode">POSTER</div>
-            </div>
-            
-            <div class="info-section" style="border: 2px solid #ff6f00;">
-                <h3 style="background: linear-gradient(135deg, #ff6f00 0%, #e65100 100%); color: white; padding: 12px 15px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px;">⚽ Điều Khiển Tỉ Số</h3>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                    <div>
-                        <label style="display: block; margin-bottom: 8px; font-weight: bold; text-align: center;">Tên Đội 1:</label>
-                        <input type="text" id="team1" placeholder="Tên Đội 1" value="ĐỘI A" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; text-align: center; font-weight: bold;">
-                    </div>
-                    <div>
-                        <label style="display: block; margin-bottom: 8px; font-weight: bold; text-align: center;">Tên Đội 2:</label>
-                        <input type="text" id="team2" placeholder="Tên Đội 2" value="ĐỘI B" style="width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; text-align: center; font-weight: bold;">
-                    </div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <button class="btn btn-increase" onclick="changeScore(1, 1)">TĂNG ĐỘI 1</button>
-                    <button class="btn btn-increase" onclick="changeScore(2, 1)">TĂNG ĐỘI 2</button>
-                    <button class="btn btn-decrease" onclick="changeScore(1, -1)">GIẢM ĐỘI 1</button>
-                    <button class="btn btn-decrease" onclick="changeScore(2, -1)">GIẢM ĐỘI 2</button>
-                </div>
-            </div>
-            
-            <div class="info-section" style="border: 2px solid #1e88e5;">
-                <h3 style="background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%); color: white; padding: 12px 15px; border-radius: 8px 8px 0 0; margin: -20px -20px 15px -20px;">⏱️ Chế Độ Hiển Thị</h3>
-                <div class="mode-grid">
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="poster" id="modePoster" onchange="changeMode()">
-                        <span>POSTER</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="intro" id="modeIntro" onchange="changeMode()">
-                        <span>GIỚI THIỆU</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="lineup" id="modeLineup" onchange="changeMode()">
-                        <span>DANH SÁCH</span>
-                    </label>
-                    
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="score" id="modeScore" checked onchange="changeMode()">
-                        <span>TỈ SỐ DƯỚI</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="countup0" id="modeCountup0" onchange="changeMode()">
-                        <span>ĐẾM 0'</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="halftime" id="modeHalftime" onchange="changeMode()">
-                        <span>NGHỈ HIỆP</span>
-                    </label>
-                    
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="countup20" id="modeCountup20" onchange="changeMode()">
-                        <span>ĐẾM 20'</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="countup25" id="modeCountup25" onchange="changeMode()">
-                        <span>ĐẾM 25'</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="countup30" id="modeCountup30" onchange="changeMode()">
-                        <span>ĐẾM 30'</span>
-                    </label>
-                    
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="countup35" id="modeCountup35" onchange="changeMode()">
-                        <span>ĐẾM 35'</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="off" id="modeOff" onchange="changeMode()">
-                        <span>TẮT</span>
-                    </label>
-                    <label class="mode-option">
-                        <input type="radio" name="mode" value="penalty" id="modePenalty" onchange="changeMode()">
-                        <span>PENALTY</span>
-                    </label>
-                </div>
-            </div>
-            
-            <button class="btn" style="width: 100%; background: #007bff; color: white;" onclick="updateAll()">🔄 CẬP NHẬT</button>
+        <div class="time-box">
+            <div class="time" id="time">00:00</div>
         </div>
-
-        <div class="status disconnected" id="status">
-            🔴 Chưa kết nối Firebase
+        <div class="team-box right">
+            <div class="score" id="score2">0</div>
+            <div class="team-name" id="team2Name">ĐỘI B</div>
         </div>
     </div>
+    
+    <!-- CHỮ CHẠY -->
+    <div class="running-text hidden" id="runningText">
+        <div class="running-text-content" id="runningTextContent"></div>
+    </div>
+
 
     <script type="module">
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyA5j17jgErGX0cwvEiQfc3FvDy_QW2ctho",
             authDomain: "live-bong-da-2670d.firebaseapp.com",
@@ -643,369 +166,71 @@
         };
 
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, set, onValue, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const matchRef = ref(database, 'match');
 
-        let currentData = {
-            team1: 'ĐỘI A',
-            team2: 'ĐỘI B',
-            score1: 0,
-            score2: 0,
-            time: '00:00',
-            mode: 'score',
-            skin: '1',
-            visible: true,
-            runningText: {
-                enabled: false,
-                mode: 'none',
-                content: ''
-            }
-        };
-        
-        let timerInterval = null; // Lưu interval để có thể clear
-
-
-        // Listen to Firebase changes
         onValue(matchRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                currentData = data;
-                updateUI();
-                document.getElementById('status').className = 'status connected';
-                document.getElementById('status').textContent = '🟢 Đã kết nối Firebase';
+                updateDisplay(data);
             }
         });
 
-        function updateUI() {
-            // Update team names
-            if (currentData.team1) {
-                document.getElementById('team1').value = currentData.team1;
-                document.getElementById('team1Info').value = currentData.team1;
-                document.getElementById('liveTeam1').textContent = currentData.team1;
-            }
-            if (currentData.team2) {
-                document.getElementById('team2').value = currentData.team2;
-                document.getElementById('team2Info').value = currentData.team2;
-                document.getElementById('liveTeam2').textContent = currentData.team2;
-            }
+        function updateDisplay(data) {
+            const scoreboard = document.getElementById('scoreboard');
             
-            // Update live scores and time
-            document.getElementById('liveScore1').textContent = currentData.score1 || 0;
-            document.getElementById('liveScore2').textContent = currentData.score2 || 0;
-            document.getElementById('liveTime').textContent = currentData.time || '00:00';
-            document.getElementById('liveMode').textContent = getModeText(currentData.mode);
-            
-            // Hiển thị logo preview nếu có
-            if (currentData.logo1) {
-                document.getElementById('logoPreview1').innerHTML = 
-                    '<img src="' + currentData.logo1 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
-            }
-            if (currentData.logo2) {
-                document.getElementById('logoPreview2').innerHTML = 
-                    '<img src="' + currentData.logo2 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
-            }
-            
-            // Update mode radio
-            if (currentData.mode) {
-                const modeRadio = document.querySelector(`input[name="mode"][value="${currentData.mode}"]`);
-                if (modeRadio) modeRadio.checked = true;
-            }
-            
-            // Update skin radio
-            if (currentData.skin) {
-                const skinRadio = document.querySelector(`input[name="skin"][value="${currentData.skin}"]`);
-                if (skinRadio) skinRadio.checked = true;
-            }
-        }
-        
-        function getModeText(mode) {
-            const modeMap = {
-                'poster': 'POSTER',
-                'intro': 'GIỚI THIỆU',
-                'lineup': 'DANH SÁCH',
-                'score': 'TỈ SỐ DƯỚI',
-                'countup0': 'ĐẾM 0\'',
-                'countup20': 'ĐẾM 20\'',
-                'countup25': 'ĐẾM 25\'',
-                'countup30': 'ĐẾM 30\'',
-                'countup35': 'ĐẾM 35\'',
-                'halftime': 'NGHỈ HIỆP',
-                'off': 'TẮT',
-                'penalty': 'PENALTY'
-            };
-            return modeMap[mode] || 'POSTER';
-        }
-
-        window.changeScore = function(team, delta) {
-            const scoreKey = team === 1 ? 'score1' : 'score2';
-            currentData[scoreKey] = Math.max(0, currentData[scoreKey] + delta);
-            saveToFirebase();
-        };
-
-        window.changeMode = function() {
-            // Dừng timer cũ trước
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-            
-            const selectedMode = document.querySelector('input[name="mode"]:checked').value;
-            currentData.mode = selectedMode;
-            
-            // Chỉ ẩn khi chọn TẮT, các mode khác đều hiện
-            if (selectedMode === 'off') {
-                currentData.visible = false;
+            // Ẩn/hiện bảng tỉ số khi mode = 'off'
+            if (data.mode === 'off') {
+                scoreboard.classList.add('hidden');
             } else {
-                currentData.visible = true;
+                scoreboard.classList.remove('hidden');
             }
             
-            // Đếm lên từ thời gian chỉ định
-            if (selectedMode === 'countup0') {
-                currentData.time = '00:00';
-                startCountup();
-            } else if (selectedMode === 'countup20') {
-                currentData.time = '20:00';
-                startCountup();
-            } else if (selectedMode === 'countup25') {
-                currentData.time = '25:00';
-                startCountup();
-            } else if (selectedMode === 'countup30') {
-                currentData.time = '30:00';
-                startCountup();
-            } else if (selectedMode === 'countup35') {
-                currentData.time = '35:00';
-                startCountup();
-            }
+            // Cập nhật dữ liệu
+            document.getElementById('team1Name').textContent = data.team1 || 'ĐỘI A';
+            document.getElementById('team2Name').textContent = data.team2 || 'ĐỘI B';
+            document.getElementById('score1').textContent = data.score1 || 0;
+            document.getElementById('score2').textContent = data.score2 || 0;
+            document.getElementById('time').textContent = data.time || '00:00';
             
-            saveToFirebase();
-        };
-
-        window.changeSkin = function() {
-            const selectedSkin = document.querySelector('input[name="skin"]:checked').value;
-            currentData.skin = selectedSkin;
-            saveToFirebase();
-        };
+            // Cập nhật chữ chạy
+            updateRunningText(data);
+        }
         
-        window.updateRunningText = function() {
-            const mode = document.querySelector('input[name="textMode"]:checked').value;
-            currentData.runningText.mode = mode;
-            currentData.runningText.enabled = mode !== 'none';
-            saveToFirebase();
-        };
+        let textInterval = null;
         
-        window.applyRunningText = function() {
-            const mode = document.querySelector('input[name="textMode"]:checked').value;
-            const content = document.getElementById('runningTextContent').value;
+        function updateRunningText(data) {
+            const runningTextDiv = document.getElementById('runningText');
+            const runningTextContent = document.getElementById('runningTextContent');
             
-            currentData.runningText = {
-                enabled: mode !== 'none',
-                mode: mode,
-                content: content
-            };
-            
-            saveToFirebase();
-        };
-
-        window.selectPoster = function(type) {
-            document.querySelectorAll('.poster-option').forEach(el => el.classList.remove('active'));
-            event.target.closest('.poster-option').classList.add('active');
-            currentData.posterType = type;
-        };
-        
-        window.switchLogoTab = function(tab) {
-            currentData.currentLogoTab = tab;
-            // Có thể thêm logic hiển thị khác nhau cho từng tab
-        };
-        
-        window.addLogo = function() {
-            const name = document.getElementById('logoName').value;
-            const positions = [];
-            
-            if (document.getElementById('logoTop').checked) positions.push('top');
-            if (document.getElementById('logoBottom').checked) positions.push('bottom');
-            if (document.getElementById('logoRight').checked) positions.push('right');
-            
-            if (!name) {
-                alert('Vui lòng nhập tên đơn vị!');
+            if (!data.runningText || !data.runningText.enabled || data.runningText.mode === 'none') {
+                runningTextDiv.classList.add('hidden');
+                if (textInterval) {
+                    clearInterval(textInterval);
+                    textInterval = null;
+                }
                 return;
             }
             
-            if (!currentSponsorLogo) {
-                alert('Vui lòng chọn logo!');
-                return;
-            }
+            // Hiển thị chữ chạy
+            runningTextContent.textContent = data.runningText.content || '';
             
-            if (!currentData.logos) currentData.logos = [];
-            currentData.logos.push({
-                name: name,
-                logo: currentSponsorLogo,
-                positions: positions,
-                type: currentData.currentLogoTab || 'taitro'
-            });
-            
-            // Clear form
-            document.getElementById('logoName').value = '';
-            document.getElementById('logoFileUpload').value = '';
-            document.getElementById('logoPreviewUpload').innerHTML = '';
-            document.getElementById('logoTop').checked = false;
-            document.getElementById('logoBottom').checked = false;
-            document.getElementById('logoRight').checked = false;
-            currentSponsorLogo = null;
-            
-            saveToFirebase();
-        };
-        
-        window.removeLogo = function() {
-            if (currentData.logos && currentData.logos.length > 0) {
-                currentData.logos.pop();
-                saveToFirebase();
-            }
-        };
-        
-        window.confirmMatchInfo = function() {
-            saveMatchInfo();
-        };
-        
-        window.saveMatchInfo = function() {
-            currentData.team1 = document.getElementById('team1Info').value;
-            currentData.team2 = document.getElementById('team2Info').value;
-            
-            const mode = document.querySelector('input[name="textMode"]:checked').value;
-            const content = document.getElementById('runningTextContent').value;
-            
-            currentData.runningText = {
-                enabled: mode !== 'none',
-                mode: mode,
-                content: content
-            };
-            
-            saveToFirebase();
-        };
-        
-        // Xử lý upload logo
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('logoFile1').addEventListener('change', function(e) {
-                handleLogoUpload(e, 1);
-            });
-            document.getElementById('logoFile2').addEventListener('change', function(e) {
-                handleLogoUpload(e, 2);
-            });
-            document.getElementById('logoFileUpload').addEventListener('change', function(e) {
-                handleSponsorLogoUpload(e);
-            });
-        });
-        
-        function handleLogoUpload(event, team) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const base64 = e.target.result;
-                    if (team === 1) {
-                        currentData.logo1 = base64;
-                        document.getElementById('logoPreview1').innerHTML = 
-                            '<img src="' + base64 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
-                    } else {
-                        currentData.logo2 = base64;
-                        document.getElementById('logoPreview2').innerHTML = 
-                            '<img src="' + base64 + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
-                    }
-                    saveToFirebase();
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-        
-        let currentSponsorLogo = null;
-        
-        function handleSponsorLogoUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    currentSponsorLogo = e.target.result;
-                    document.getElementById('logoPreviewUpload').innerHTML = 
-                        '<img src="' + currentSponsorLogo + '" style="max-width: 100px; max-height: 100px; border-radius: 5px;">';
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        window.updateAll = function() {
-            currentData.team1 = document.getElementById('team1').value;
-            currentData.team2 = document.getElementById('team2').value;
-            saveToFirebase();
-        };
-
-        window.switchTab = function(tab) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            if (tab === 'info') {
-                document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-                document.getElementById('infoTab').classList.add('active');
-            } else if (tab === 'control') {
-                document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-                document.getElementById('controlTab').classList.add('active');
-            }
-        };
-
-        function startCountdown(minutes) {
-            let totalSeconds = minutes * 60;
-            
-            timerInterval = setInterval(() => {
-                if (totalSeconds <= 0 || !currentData.mode.startsWith('countdown')) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                    return;
+            if (data.runningText.mode === 'continuous') {
+                // Liên tục
+                runningTextDiv.classList.remove('hidden');
+            } else if (data.runningText.mode === 'every2min') {
+                // Mỗi 2 phút
+                if (!textInterval) {
+                    runningTextDiv.classList.remove('hidden');
+                    textInterval = setInterval(() => {
+                        runningTextDiv.classList.toggle('hidden');
+                    }, 120000); // 2 phút = 120000ms
                 }
-                
-                totalSeconds--;
-                const mins = Math.floor(totalSeconds / 60);
-                const secs = totalSeconds % 60;
-                currentData.time = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                saveToFirebase();
-            }, 1000);
-        }
-        
-        function startCountup() {
-            const startTime = currentData.time.split(':');
-            let totalSeconds = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
-            
-            timerInterval = setInterval(() => {
-                if (!currentData.mode.startsWith('countup')) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                    return;
-                }
-                
-                totalSeconds++;
-                const mins = Math.floor(totalSeconds / 60);
-                const secs = totalSeconds % 60;
-                currentData.time = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                saveToFirebase();
-            }, 1000);
-        }
-
-        function saveToFirebase() {
-            set(matchRef, currentData)
-                .then(() => console.log('Đã cập nhật!'))
-                .catch((error) => {
-                    console.error('Lỗi:', error);
-                    alert('Lỗi khi cập nhật: ' + error.message);
-                });
-        }
-
-        // Initialize
-        setTimeout(() => {
-            if (document.getElementById('status').classList.contains('disconnected')) {
-                saveToFirebase();
             }
-        }, 2000);
+        }
     </script>
 </body>
 </html>
-
