@@ -21,7 +21,7 @@
             display: none !important;
         }
         
-        /* SKIN 2 - 100% giống ảnh mẫu */
+        /* SKIN 2 - Sửa lỗi và cải thiện */
         .scoreboard {
             position: fixed;
             top: 25px;
@@ -36,15 +36,15 @@
             transform-origin: top right;
             border-radius: 0;
             overflow: hidden;
-            font-family: 'Arial Black', Arial, sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .team-box {
-            padding: 0 30px;
+            padding: 0 25px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            min-width: 200px;
+            gap: 15px;
+            min-width: 180px;
             position: relative;
         }
         
@@ -56,33 +56,37 @@
         .team-box.right {
             background: #0080FF;
             justify-content: space-between;
-            flex-direction: row-reverse;
         }
         
         .team-name {
             color: white;
-            font-size: 18px;
-            font-weight: 900;
+            font-size: 16px;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             white-space: nowrap;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            font-family: 'Arial Black', Arial, sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .score {
             color: white;
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 900;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            min-width: 40px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            min-width: 50px;
             text-align: center;
-            font-family: 'Arial Black', Arial, sans-serif;
+            font-family: Arial, sans-serif;
+            /* Làm nổi bật tỉ số */
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 2px 8px;
+            border: 2px solid rgba(255,255,255,0.3);
         }
         
         .time-box {
             background: #CC0000;
-            padding: 0 25px;
+            padding: 0 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -91,10 +95,10 @@
         
         .time {
             color: white;
-            font-size: 20px;
-            font-weight: 900;
+            font-size: 18px;
+            font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-            font-family: 'Arial Black', Arial, sans-serif;
+            font-family: Arial, sans-serif;
         }
         
         .team-box {
@@ -195,18 +199,18 @@
 </head>
 <body>
 
-    <!-- BẢNG TỈ SỐ - 100% giống ảnh mẫu -->
+    <!-- BẢNG TỈ SỐ - Sửa lỗi tỉ số đội 2 -->
     <div class="scoreboard" id="scoreboard">
         <div class="team-box left">
-            <div class="team-name" id="team1Name">TÊN ĐỘI 1</div>
-            <div class="score" id="score1">2</div>
+            <div class="team-name" id="team1Name">FC TRUNG THÀNH</div>
+            <div class="score" id="score1">1</div>
         </div>
         <div class="time-box">
-            <div class="time" id="time">03:40</div>
+            <div class="time" id="time">03:51</div>
         </div>
         <div class="team-box right">
-            <div class="score" id="score2">3</div>
-            <div class="team-name" id="team2Name">TÊN ĐỘI 2</div>
+            <div class="team-name" id="team2Name">FC TÂN LẬP</div>
+            <div class="score" id="score2">1</div>
         </div>
     </div>
     
