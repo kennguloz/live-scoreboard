@@ -29,14 +29,17 @@
         - top: Khoảng cách từ trên xuống (px)
         - right: Khoảng cách từ phải qua trái (px)
         - min-width: Độ rộng tối thiểu của bảng (px)
+        - transform: scale() - Thu nhỏ/phóng to toàn bộ bảng
         
         VÍ DỤ:
-        - Dịch xuống: tăng top (25px → 50px)
-        - Dịch lên: giảm top (25px → 10px)
-        - Dịch sang trái: tăng right (30px → 100px)
-        - Dịch sang phải: giảm right (30px → 10px)
-        - Thu nhỏ: giảm min-width (450px → 350px)
-        - Phóng to: tăng min-width (450px → 600px)
+        - Dịch xuống: tăng top (30px → 50px)
+        - Dịch lên: giảm top (30px → 10px)
+        - Dịch sang trái: tăng right (40px → 100px)
+        - Dịch sang phải: giảm right (40px → 10px)
+        - Thu nhỏ 50%: thêm transform: scale(0.5);
+        - Thu nhỏ 70%: thêm transform: scale(0.7);
+        - Phóng to 120%: thêm transform: scale(1.2);
+        - Kích thước gốc: không có transform
         ========================================
         */
         .scoreboard {
@@ -54,6 +57,8 @@
             font-family: Arial, sans-serif;
             z-index: 10000;
             min-width: 250px;       /* ← ĐIỀU CHỈNH KÍCH THƯỚC */
+            /* transform: scale(0.5); */  /* ← BỎ COMMENT ĐỂ THU NHỎ 50% */
+            transform-origin: top right;
         }
         
         .team-name-box {
