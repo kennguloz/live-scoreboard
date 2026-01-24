@@ -22,10 +22,27 @@
         }
         
         /* SKIN 2 - Cấu trúc 5 ô riêng biệt */
+        /* 
+        ========================================
+        ĐIỀU CHỈNH VỊ TRÍ VÀ KÍCH THƯỚC BẢNG TỈ SỐ
+        ========================================
+        - top: Khoảng cách từ trên xuống (px)
+        - right: Khoảng cách từ phải qua trái (px)
+        - min-width: Độ rộng tối thiểu của bảng (px)
+        
+        VÍ DỤ:
+        - Dịch xuống: tăng top (25px → 50px)
+        - Dịch lên: giảm top (25px → 10px)
+        - Dịch sang trái: tăng right (30px → 100px)
+        - Dịch sang phải: giảm right (30px → 10px)
+        - Thu nhỏ: giảm min-width (450px → 350px)
+        - Phóng to: tăng min-width (450px → 600px)
+        ========================================
+        */
         .scoreboard {
             position: fixed;
-            top: 25px;
-            right: 30px;
+            top: 25px;              /* ← ĐIỀU CHỈNH VỊ TRÍ DỌC */
+            right: 30px;            /* ← ĐIỀU CHỈNH VỊ TRÍ NGANG */
             display: flex;
             align-items: stretch;
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
@@ -36,7 +53,7 @@
             overflow: visible;
             font-family: Arial, sans-serif;
             z-index: 10000;
-            min-width: 600px;
+            min-width: 450px;       /* ← ĐIỀU CHỈNH KÍCH THƯỚC */
         }
         
         .team-name-box {
