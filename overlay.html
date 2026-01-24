@@ -28,7 +28,6 @@
         ========================================
         - top: Khoảng cách từ trên xuống (px)
         - right: Khoảng cách từ phải qua trái (px)
-        - min-width: Độ rộng tối thiểu của bảng (px)
         - transform: scale() - Thu nhỏ/phóng to toàn bộ bảng
         
         VÍ DỤ:
@@ -36,10 +35,12 @@
         - Dịch lên: giảm top (30px → 10px)
         - Dịch sang trái: tăng right (40px → 100px)
         - Dịch sang phải: giảm right (40px → 10px)
-        - Thu nhỏ 50%: thêm transform: scale(0.5);
-        - Thu nhỏ 70%: thêm transform: scale(0.7);
-        - Phóng to 120%: thêm transform: scale(1.2);
-        - Kích thước gốc: không có transform
+        - Thu nhỏ 20%: transform: scale(0.2);
+        - Thu nhỏ 30%: transform: scale(0.3);
+        - Thu nhỏ 50%: transform: scale(0.5);
+        - Thu nhỏ 70%: transform: scale(0.7);
+        - Kích thước gốc 100%: transform: scale(1);
+        - Phóng to 120%: transform: scale(1.2);
         ========================================
         */
         .scoreboard {
@@ -56,8 +57,7 @@
             overflow: visible;
             font-family: Arial, sans-serif;
             z-index: 10000;
-            min-width: 250px;       /* ← ĐIỀU CHỈNH KÍCH THƯỚC */
-            /* transform: scale(0.5); */  /* ← BỎ COMMENT ĐỂ THU NHỎ 50% */
+            transform: scale(0.5);
             transform-origin: top right;
         }
         
